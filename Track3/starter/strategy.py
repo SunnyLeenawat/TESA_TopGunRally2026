@@ -12,6 +12,7 @@ results across several practice games; one game is mostly noise.
 
 from __future__ import annotations
 
+import traceback
 import json
 import math
 import random
@@ -335,7 +336,7 @@ def rule_plan(
             continue
 
         lot_id = str(best_lot["lot_id"])
-        kg = min(left[lot_id], int(rfq.get("kg") or 0), int(room)) // bag * bag
+        kg = min(left[lot_id], int(rfq.get("kg") or 0), int(min(room, 10**9))) // bag * bag
         if kg < bag:
             continue
         multiplier = _number(markup.get(str(rfq.get("buyer_type")), 1.0), 1.0)
@@ -422,7 +423,8 @@ def guard_offers(
             continue
 
         kg = max(0, int(_number(raw.get("kg")))) // bag * bag
-        kg = min(kg, int(rfq.get("kg") or 0), left[lot_id], int(room))
+        kg = min(kg, int(rfq.get("kg") or 0), left[lot_id], int(min(room, 10**9)))
+
         if kg < bag:
             dropped.append(
                 {
@@ -889,7 +891,7 @@ def decide(
             if decision["offers"] or (state.get("round") or {}).get("kind") == "practice":
                 return decision
         except Exception as exc:  # noqa: BLE001 - never lose a round to a bug; fall through to the stock planner
-            learn_error = f"learned planner failed: {type(exc).__name__}: {exc}"
+            learn_error = f"learned planner failed: {type(exc).__name__}: {exc} @ {traceback.format_exc().splitlines()[-3].strip()}"
         else:
             learn_error = ""
     else:
