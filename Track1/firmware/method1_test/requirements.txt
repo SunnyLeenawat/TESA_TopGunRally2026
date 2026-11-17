@@ -1,2 +1,4 @@
-# Python PC-side serial capture only; not an Arduino library.
+# Python PC-side capture and analysis; not Arduino libraries.
 pyserial==3.5
+numpy==2.5.5
+matplotlib==3.11.2

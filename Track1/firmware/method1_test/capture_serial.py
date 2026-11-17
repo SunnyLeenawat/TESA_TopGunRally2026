@@ -60,6 +60,8 @@ def main():
                         received_header = True
                         continue
                     if not received_header:
+                        if line.startswith('SUMMARY '):
+                            print(line)
                         continue
                     fields = next(csv.reader([line]))
                     if len(fields) != 7 or fields[6] not in ('ok', 'initial_low', 'timeout'):

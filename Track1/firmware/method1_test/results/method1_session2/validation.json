@@ -1,0 +1,92 @@
+{
+  "model_sha256": "f9f100ba39d0964eeb0751710ccf0320bc156bb2b9a4c67793a3f56318c063bb",
+  "frozen_coefficients": {
+    "slope": 3.0739224418808453,
+    "intercept": -18.352037372425478
+  },
+  "refitted": false,
+  "sources": [
+    {
+      "nominal_pf": 5,
+      "file": "20261117_201611_317984_5pf.csv",
+      "sha256": "7a33d2e316922fd87e72a0d9834f4e431cf0f0595365214c8518cc14f849dd7d"
+    },
+    {
+      "nominal_pf": 10,
+      "file": "20261117_201504_115277_10pf.csv",
+      "sha256": "8e10a964bfaedd8cbf460ee56060752949db8d23160dfd4f9a436945635e6e65"
+    },
+    {
+      "nominal_pf": 15,
+      "file": "20261117_201334_003271_15pf.csv",
+      "sha256": "4f7c3decf2ad22c96a88329934fe23918ffaa9186237bdced2d4b55862bd34a7"
+    },
+    {
+      "nominal_pf": 20,
+      "file": "20261117_201206_298023_20pf.csv",
+      "sha256": "73befb24f298b41459469829f128d97f9e2a62655a5af2cfa12ef2470ed0b350"
+    }
+  ],
+  "summary": [
+    {
+      "nominal_pf": 5,
+      "valid_readings": 320,
+      "median_time_mean_us": 7.4092,
+      "time_change_from_round1_us": -0.14374999999999982,
+      "predicted_mean_pf": 4.423268783958081,
+      "predicted_sd_pf": 0.05331117879223822,
+      "mean_error_pf": -0.5767312160419188,
+      "relative_bias_pct": -11.534624320838375,
+      "rmse_pf": 0.5786990245235988,
+      "reference_mv_min": 865.0,
+      "reference_mv_max": 936.0
+    },
+    {
+      "nominal_pf": 10,
+      "valid_readings": 320,
+      "median_time_mean_us": 9.109200000000001,
+      "time_change_from_round1_us": -0.14624999999999844,
+      "predicted_mean_pf": 9.648936935155518,
+      "predicted_sd_pf": 0.09052101399828658,
+      "mean_error_pf": -0.3510630648444824,
+      "relative_bias_pct": -3.5106306484448244,
+      "rmse_pf": 0.3602783905235279,
+      "reference_mv_min": 834.0,
+      "reference_mv_max": 904.0
+    },
+    {
+      "nominal_pf": 15,
+      "valid_readings": 320,
+      "median_time_mean_us": 10.894200000000001,
+      "time_change_from_round1_us": -0.0337499999999995,
+      "predicted_mean_pf": 15.135888493912827,
+      "predicted_sd_pf": 0.10220358756338734,
+      "mean_error_pf": 0.13588849391282737,
+      "relative_bias_pct": 0.9059232927521825,
+      "rmse_pf": 0.16377466662020138,
+      "reference_mv_min": 878.0,
+      "reference_mv_max": 903.0
+    },
+    {
+      "nominal_pf": 20,
+      "valid_readings": 320,
+      "median_time_mean_us": 12.43045,
+      "time_change_from_round1_us": 0.02000000000000135,
+      "predicted_mean_pf": 19.858201845252275,
+      "predicted_sd_pf": 0.17576631672757678,
+      "mean_error_pf": -0.1417981547477254,
+      "relative_bias_pct": -0.708990773738627,
+      "rmse_pf": 0.21171149039823736,
+      "reference_mv_min": 891.0,
+      "reference_mv_max": 903.0
+    }
+  ],
+  "rmse_vs_nominal_pf": 0.3661751548972122,
+  "mae_vs_nominal_pf": 0.3079393933946612,
+  "limitations": [
+    "Same physical references; tests repeatability across rounds, not independent absolute accuracy.",
+    "Nominal reference tolerance is +/-5%; not a meter-error pass/fail limit.",
+    "Uses each batch median with all 64 readings retained.",
+    "No source CSV or round-1 calibration was changed."
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "sources": [
+    {
+      "nominal_pf": 5,
+      "file": "20261117_191532_611032_5pf.csv",
+      "sha256": "3cd87a938b52db88d3a2102641d2c57409497d4e186d757475a83e2fe7ca0d3a"
+    },
+    {
+      "nominal_pf": 10,
+      "file": "20261117_192226_294059_10pf.csv",
+      "sha256": "a193561924b72017dfa8215c29772d7ab76f706f54633b48b87d7513809b53e9"
+    },
+    {
+      "nominal_pf": 15,
+      "file": "20261117_200129_124924_15pf.csv",
+      "sha256": "30fc08c031a8768596a65d69c50ce6cd074932c8efac3466412f1f0464055733"
+    },
+    {
+      "nominal_pf": 20,
+      "file": "20261117_200506_323610_20pf.csv",
+      "sha256": "39b884ee3037bc279b60dc14bb0c967bec728bdb48e5585c68ed72ae605277b7"
+    }
+  ],
+  "aggregation": "Median of all 64 readings per batch; no rows removed",
+  "reference_tolerance_pct": 5,
+  "independent_capacitor_count": 4,
+  "batches_per_capacitor": 5,
+  "raw_readings": 1280,
+  "calibration": {
+    "equation": "capacitance_pf = slope * batch_median_elapsed_us + intercept",
+    "slope": 3.0739224418808453,
+    "intercept": -18.352037372425478,
+    "nominal_range_pf": [
+      5,
+      20
+    ],
+    "observed_batch_median_range_us": [
+      7.5417,
+      12.46045
+    ]
+  },
+  "theory_assumptions": {
+    "resistance_ohm": 1000000,
+    "charge_voltage_v": 3.3,
+    "threshold": "reference_mv from each CSV; ADC estimate"
+  },
+  "training_rmse_vs_nominal_pf": 0.20020291525985523,
+  "held_out_rmse_vs_nominal_pf": 0.4453316676665495,
+  "held_out_mae_vs_nominal_pf": 0.3976573887031131,
+  "folds": [
+    {
+      "held_out_nominal_pf": 5,
+      "type": "extrapolation",
+      "slope_pf_per_us": 3.1635547793825802,
+      "intercept_pf": -19.370809981992966,
+      "mean_prediction_pf": 4.523361088944693,
+      "bias_vs_nominal_pf": -0.4766389110553071,
+      "rmse_vs_nominal_pf": 0.4778512693800374
+    },
+    {
+      "held_out_nominal_pf": 10,
+      "type": "interpolation",
+      "slope_pf_per_us": 3.0658570254280124,
+      "intercept_pf": -18.236154140818567,
+      "mean_prediction_pf": 10.13973226517913,
+      "bias_vs_nominal_pf": 0.1397322651791299,
+      "rmse_vs_nominal_pf": 0.1658754452515554
+    },
+    {
+      "held_out_nominal_pf": 15,
+      "type": "interpolation",
+      "slope_pf_per_us": 3.097726339503469,
+      "intercept_pf": -18.504000418333643,
+      "mean_prediction_pf": 15.347798133443291,
+      "bias_vs_nominal_pf": 0.3477981334432904,
+      "rmse_vs_nominal_pf": 0.36737932788405825
+    },
+    {
+      "held_out_nominal_pf": 20,
+      "type": "extrapolation",
+      "slope_pf_per_us": 2.9616239351865055,
+      "intercept_pf": -17.38154601157009,
+      "mean_prediction_pf": 19.373539754865273,
+      "bias_vs_nominal_pf": -0.6264602451347251,
+      "rmse_vs_nominal_pf": 0.6343950719895478
+    }
+  ],
+  "limitations": [
+    "One acquisition run per capacitor; not three repeat sessions.",
+    "Reference values are nominal +/-5%, not independently measured.",
+    "Batch medians are repeated measurements, not independent reference capacitors.",
+    "Endpoint holdouts extrapolate; results are exploratory, not absolute-accuracy certification.",
+    "The recurring elevated first reading is retained; its cause is unconfirmed.",
+    "Calibration applies to batch medians and the same circuit/settings, not arbitrary single readings.",
+    "Tolerance envelope excludes resistor, supply, ADC, timing and other uncertainty sources.",
+    "No firmware coefficients were changed."
+  ]
+}
