@@ -1,0 +1,31 @@
+# Secrets: never commit the team key or LLM settings
+.env
+starter/.env
+*.env
+!.env.example
+!starter/.env.example
+
+# Logs and saved game memory (keep the folder itself)
+starter/logs/*
+!starter/logs/.gitkeep
+logs/*
+!logs/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
