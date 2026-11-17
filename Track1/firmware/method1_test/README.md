@@ -1,6 +1,41 @@
 # Method 1 bench test
 
-Use an original ESP32-WROOM-32 and the supplied LM393. This experiment records raw RC crossing times. It is not the final competition firmware and does not claim calibrated pF values or implement the competition LED/output format yet.
+Use a DOIT ESP32 DEVKIT V1 (ESP32-WROOM-32) and the supplied LM393. This experiment records raw RC crossing times. It is not the final competition firmware and does not claim calibrated pF values or implement the competition LED/output format yet.
+
+## Dependencies and Arduino IDE setup
+
+`sketch.yaml` records the board/core dependency as an Arduino CLI build profile. For Arduino IDE, install and select the matching package manually using the steps below; do not rely on the YAML file to install it or set the IDE board automatically.
+
+| Dependency | Selected version / setting |
+| --- | --- |
+| Arduino IDE | 2.x; record your exact installed version with experiment results |
+| Boards Manager package | **esp32 by Espressif Systems**, version **3.3.0** |
+| Board | **DOIT ESP32 DEVKIT V1** for the original ESP32-WROOM-32 development board |
+| Board identifier (FQBN) | `esp32:esp32:esp32doit-devkit-v1` |
+| Additional Library Manager libraries | **None** |
+| Serial Monitor | **9600 baud** |
+
+`Arduino.h`, `driver/gpio.h`, and the ESP32 APIs used by this sketch are provided by the ESP32 board package. Do not install a separate GPIO or LM393 library.
+
+1. Open **File > Preferences** and add this to **Additional Boards Manager URLs**, preserving any existing entries:
+
+   ```text
+   https://espressif.github.io/arduino-esp32/package_esp32_index.json
+   ```
+
+2. Open **Boards Manager**, search for **esp32**, choose **esp32 by Espressif Systems**, select **3.3.0**, and install it.
+3. Open `method1_test.ino`. Under **Tools > Board > esp32**, select **DOIT ESP32 DEVKIT V1**, then select the connected COM port.
+4. Click **Verify**, then **Upload**. Record the board settings before gathering calibration data.
+
+Version 3.3.0 is the selected reproducible baseline, not a claim of a successful build or the latest release. Compilation and hardware verification remain pending. If the team chooses another core version, update this table and `sketch.yaml` together and recheck timing calibration.
+
+Optional Arduino CLI equivalent, from the repository root:
+
+```powershell
+arduino-cli compile --profile doit_esp32_devkit_v1 Track1/firmware/method1_test
+```
+
+References: [Espressif IDE installation](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html), [ESP32 core 3.3.0 release](https://github.com/espressif/arduino-esp32/releases/tag/3.3.0), and [Arduino build profiles](https://docs.arduino.cc/arduino-cli/sketch-project-file/).
 
 ## Wiring (power disconnected)
 
