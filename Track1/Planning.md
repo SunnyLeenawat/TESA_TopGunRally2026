@@ -115,7 +115,7 @@ Complete M1-M3 before spending the remaining time on extensions. Preserve a work
 - Keep hands and movable cables away during acquisition. A change in geometry, lead length, electrode position, or front end creates a new circuit revision and requires new calibration.
 - Use 3.3 V-compatible GPIO signals and common ground. Check the actual development board and onboard LED before assigning final pins.
 - Prefer ADC1 for voltage acquisition. Keep WiFi and Bluetooth disabled for the competition builds.
-- Use software button debouncing. Reserve the single 100 nF capacitor for the chosen circuit's supply decoupling where needed; do not add it across the sensing electrodes as a smoothing capacitor.
+- Following the organizer guidance relayed by the user, allocate the single 0.1 uF (100 nF) capacitor across the momentary switch, between GPIO26 and GND, to help suppress button bounce. Retain the ESP32 internal button pullup and software debouncing. This capacitor is not allocated to LM393 supply decoupling or the sensing electrodes. For Method 1, use the supplied 2 kOhm resistor as the LM393 output pullup to 3.3 V, separately from the button circuit.
 - Never allocate the same supplied resistor or capacitor to two different physical functions simultaneously. Document a complete parts allocation for each circuit.
 
 ### M1: comparator threshold and timing

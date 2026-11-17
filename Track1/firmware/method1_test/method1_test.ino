@@ -9,6 +9,8 @@ constexpr int COMPARATOR_PIN = 27;
 // IN+ = reference, IN- = charging capacitor: capture HIGH -> LOW.
 constexpr int REFERENCE_PIN = 34;
 constexpr int BUTTON_PIN = 26;
+// Momentary switch and 0.1 uF (100 nF) capacitor in parallel to GND.
+// Internal pullup and the 30 ms software debounce remain enabled.
 constexpr unsigned SAMPLE_COUNT = 64;
 volatile bool crossed = false;
 volatile uint32_t crossingCycles = 0;
