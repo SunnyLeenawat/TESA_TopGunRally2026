@@ -1,78 +1,211 @@
-# Method 1 bench test
+﻿# วิธีที่ 1: วัดเวลาชาร์จ RC ด้วย LM393
 
-Use a DOIT ESP32 DEVKIT V1 (ESP32-WROOM-32) and the supplied LM393. This experiment records raw RC crossing times. It is not the final competition firmware and does not claim calibrated pF values or implement the competition LED/output format yet.
+คู่มือนี้ใช้กับ **DOIT ESP32 DEVKIT V1 (ESP32-WROOM-32)** เป้าหมายคือเก็บเวลาชาร์จของตัวเก็บประจุ 5, 10, 15 และ 20 pF แล้วนำไปสร้างกราฟเพื่อประเมินวิธีวัดและสอบเทียบ
 
-## Dependencies and Arduino IDE setup
+**สถานะ:** ยังไม่ได้ยืนยันการคอมไพล์กับ Arduino IDE ของทีมและยังไม่ได้ทดสอบวงจรจริง โปรแกรมนี้รายงานเวลาที่วัดได้ ยังไม่ใช่ค่าความจุที่สอบเทียบแล้ว และยังไม่มีรูปแบบข้อความ/LED สำหรับส่งแข่ง
 
-`sketch.yaml` records the board/core dependency as an Arduino CLI build profile. For Arduino IDE, install and select the matching package manually using the steps below; do not rely on the YAML file to install it or set the IDE board automatically.
+## 1. หลักการทำงาน
 
-| Dependency | Selected version / setting |
+GPIO25 ส่งแรงดันผ่านตัวต้านทาน 1 MOhm ไปชาร์จตัวเก็บประจุ LM393 เปรียบเทียบแรงดันที่ตัวเก็บประจุกับแรงดันอ้างอิงประมาณ 900 mV เมื่อแรงดันตัวเก็บประจุสูงกว่าแรงดันอ้างอิง เอาต์พุตจะเปลี่ยนจาก HIGH เป็น LOW โปรแกรมรับสัญญาณที่ GPIO27 และบันทึกเวลาที่ผ่านไป
+
+หนึ่งการกดปุ่มหรือส่งคำสั่ง `m` จะวัดภายใน **64 ครั้ง** เก็บข้อมูลไว้ก่อน แล้วจึงส่ง CSV ออก เพื่อไม่ให้การพิมพ์ข้อความรบกวนช่วงจับเวลา
+
+## 2. Dependencies และการติดตั้ง Arduino IDE
+
+| รายการ | ค่าที่ใช้ |
 | --- | --- |
-| Arduino IDE | 2.x; record your exact installed version with experiment results |
-| Boards Manager package | **esp32 by Espressif Systems**, version **3.3.0** |
-| Board | **DOIT ESP32 DEVKIT V1** for the original ESP32-WROOM-32 development board |
-| Board identifier (FQBN) | `esp32:esp32:esp32doit-devkit-v1` |
-| Additional Library Manager libraries | **None** |
+| Arduino IDE | 2.x และบันทึกเลขรุ่นที่ติดตั้งจริง |
+| แพ็กเกจบอร์ด | esp32 by Espressif Systems รุ่น **3.3.0** |
+| บอร์ด | **DOIT ESP32 DEVKIT V1** |
+| FQBN | `esp32:esp32:esp32doit-devkit-v1` |
+| ไลบรารีเพิ่มเติม | ไม่ต้องติดตั้ง |
 | Serial Monitor | **9600 baud** |
 
-`Arduino.h`, `driver/gpio.h`, and the ESP32 APIs used by this sketch are provided by the ESP32 board package. Do not install a separate GPIO or LM393 library.
+`Arduino.h`, `driver/gpio.h` และคำสั่ง ESP32 มาพร้อมแพ็กเกจบอร์ด ไม่ต้องติดตั้งไลบรารี LM393 เพิ่ม ส่วน `sketch.yaml` เป็น build profile สำหรับ Arduino CLI ผู้ใช้ Arduino IDE ต้องติดตั้งและเลือกบอร์ดเองตามขั้นตอนนี้
 
-1. Open **File > Preferences** and add this to **Additional Boards Manager URLs**, preserving any existing entries:
+### ขั้นตอนที่ 1: เพิ่ม URL และติดตั้งแพ็กเกจ
+
+1. เปิด **File > Preferences** แล้วหา **Additional Boards Manager URLs**
+2. เพิ่ม URL ด้านล่าง โดยเก็บ URL เดิมไว้ถ้ามี แล้วกด OK
 
    ```text
    https://espressif.github.io/arduino-esp32/package_esp32_index.json
    ```
 
-2. Open **Boards Manager**, search for **esp32**, choose **esp32 by Espressif Systems**, select **3.3.0**, and install it.
-3. Open `method1_test.ino`. Under **Tools > Board > esp32**, select **DOIT ESP32 DEVKIT V1**, then select the connected COM port.
-4. Click **Verify**, then **Upload**. Record the board settings before gathering calibration data.
+3. เปิด **Boards Manager** จากแถบด้านข้างหรือ **Tools > Board > Boards Manager**
+4. ค้นหา `esp32` เลือกรายการของ **Espressif Systems** เลือกรุ่น **3.3.0** แล้วกด Install รอจนเสร็จ
+5. ใช้ core รุ่นเดียวกันตลอดการทดลอง หากเปลี่ยนรุ่นให้แก้ README และ `sketch.yaml` พร้อมตรวจ calibration ใหม่ รุ่นที่ระบุเป็น baseline ของโครงการ ไม่ใช่การรับรองว่าคอมไพล์หรือทดสอบผ่านแล้ว
 
-Version 3.3.0 is the selected reproducible baseline, not a claim of a successful build or the latest release. Compilation and hardware verification remain pending. If the team chooses another core version, update this table and `sketch.yaml` together and recheck timing calibration.
+### ขั้นตอนที่ 2: เลือกบอร์ดและพอร์ต
 
-Optional Arduino CLI equivalent, from the repository root:
+1. เปิด `method1_test.ino` ในโฟลเดอร์ `method1_test` โดยรักษาชื่อไฟล์หลักและชื่อโฟลเดอร์ให้ตรงกัน
+2. ต่อ ESP32 กับคอมพิวเตอร์ด้วยสาย USB ที่ส่งข้อมูลได้
+3. เลือก **Tools > Board > esp32 > DOIT ESP32 DEVKIT V1**
+4. เลือก **Tools > Port** ให้ตรงกับบอร์ด หากไม่แน่ใจ ให้ดูว่าพอร์ตใดหายเมื่อถอด USB และกลับมาเมื่อเสียบใหม่
+5. กด **Verify** เพื่อตรวจการคอมไพล์ก่อน หากมี error ให้เก็บข้อความเพื่อวิเคราะห์ก่อนอัปโหลด
+
+## 3. เตรียมและต่อวงจร
+
+**ถอด USB และแหล่งจ่ายไฟก่อนต่อหรือเปลี่ยนอุปกรณ์** เลข GPIO หมายถึงเลขบนบอร์ด เช่น GPIO25 ไม่ใช่การนับตำแหน่งขาจากหัวแถว
+
+ใช้ LM393, potentiometer 10 kOhm, ตัวต้านทาน 1 MOhm และ 10 kOhm, ตัวเก็บประจุ 100 nF, ปุ่มกด และตัวเก็บประจุที่จะทดสอบ ส่วนตัวต้านทาน 2 kOhm ยังไม่ใช้ในวงจรนี้
+
+สำหรับ LM393 **แบบ DIP-8** เมื่อมองจากด้านบนและหันรอยบากขึ้น ขา 1 อยู่ซ้ายบน นับลงทางซ้ายแล้ววนขึ้นทางขวา หากเป็นแพ็กเกจอื่นต้องตรวจ pinout ก่อน
+
+```text
+       รอยบาก
+      +--U--+
+ OUT1 |1   8| VCC
+  IN- |2   7| OUT2
+  IN+ |3   6| IN2-
+  GND |4   5| IN2+
+      +-----+
+```
+
+### ขั้นตอนที่ 3: ต่อไฟเลี้ยง
+
+1. ต่อ ESP32 **3V3 ไป LM393 ขา 8** และ **GND ไปขา 4**
+2. ทุกส่วนของวงจรใช้ GND ร่วมกัน
+3. ต่อ **100 nF (0.1 uF)** ระหว่างขา 8 กับขา 4 ใกล้ IC เพื่อลดการรบกวนของไฟเลี้ยง ตัวนี้ไม่ใช่ตัวที่วัดและไม่ต้องต่อขนานกับตัวเก็บประจุ 5-20 pF
+
+### ขั้นตอนที่ 4: ต่อแรงดันอ้างอิง
+
+1. ตรวจว่าขาใดของ potentiometer เป็นปลายทั้งสองและขาใดเป็น wiper อย่าเดาจากตำแหน่งขาของ trimpot
+2. ต่อปลายสองข้างเข้ากับ **3V3 และ GND**
+3. ต่อ wiper ไปทั้ง **LM393 ขา 3 (+)** และ **GPIO34**
+4. หลังเปิดโปรแกรม เราจะใช้คำสั่ง `r` เพื่อปรับแรงดันให้ประมาณ **900 mV หรือ 0.9 V**
+
+GPIO34 อ่านเฉพาะแรงดันอ้างอิง ไม่ได้อ่านจุดวัดตัวเก็บประจุ เราไม่ใช้ 2.086 V ตามตัวอย่างสไลด์ เพราะอยู่นอกช่วง common-mode ของ LM393 รุ่นปกติเมื่อจ่ายไฟ 3.3 V ค่า ADC เป็นค่าประมาณ ไม่ใช่เครื่องมืออ้างอิงความแม่นยำสูง
+
+### ขั้นตอนที่ 5: ต่อทางชาร์จ
+
+1. ต่อ **GPIO25 ผ่านตัวต้านทาน 1 MOhm ไปยังจุดวัด C**
+2. ต่อจุดวัด C ไป **LM393 ขา 2 (-)**
+3. เมื่อต้องการวัด ให้ต่อ C ที่ทดสอบระหว่างจุดวัด C กับ GND สำหรับ baseline ครั้งแรกให้เว้นตัวเก็บประจุนี้ไว้ก่อน
+
+```text
+GPIO25 ---- 1 MOhm ----+---- LM393 ขา 2 (-)
+                      |
+                 C ที่ทดสอบ
+                      |
+                     GND
+```
+
+### ขั้นตอนที่ 6: ต่อเอาต์พุตและปุ่ม
+
+1. ต่อ **LM393 ขา 1 ไป GPIO27**
+2. ต่อตัวต้านทาน **10 kOhm ระหว่างขา 1 กับ 3V3** เป็น pullup ที่จำเป็นสำหรับ open-collector output ห้ามดึงเอาต์พุตขึ้นไปที่ 5 V
+3. ต่อสวิตช์ระหว่าง **GPIO26 กับ GND** โปรแกรมเปิด pullup ภายใน ESP32 แล้ว หากปุ่มมีสี่ขา ต้องเลือกคู่ที่เชื่อมกันเมื่อกด ไม่ใช่คู่ที่เชื่อมกันอยู่แล้ว
+4. comparator อีกตัวที่ไม่ใช้: ต่อ **ขา 5 ไป GND**, **ขา 6 ไป wiper** และเว้น **ขา 7**
+5. ตรวจทิศ IC, ค่า R, ขา GPIO และตรวจว่าไม่มีสายเชื่อม 3V3 กับ GND โดยตรง ก่อนเสียบไฟ
+
+รักษาสายให้สั้นและอยู่ตำแหน่งเดิม ความจุแฝงจากสายและการสัมผัสอาจมีผลมากเมื่อวัดระดับ pF
+
+## 4. อัปโหลดและเริ่มทดลอง
+
+### ขั้นตอนที่ 7: อัปโหลดและเปิด Serial Monitor
+
+1. เสียบ USB ตรวจบอร์ดและพอร์ต แล้วกด **Upload** รอจน IDE แจ้งว่าสำเร็จ
+2. เปิด **Serial Monitor** และตั้งเป็น **9600 baud**
+3. ข้อความเริ่มต้นจะบอกว่า `r` อ่านแรงดัน และ `m` เริ่มวัด หากพลาดข้อความให้ส่ง `r` เพื่อตรวจการตอบกลับได้
+4. ข้อความ bootloader ตอนรีเซ็ตอาจอ่านไม่ออกที่ 9600 ให้ดูการตอบคำสั่งของ sketch หลังบูตเป็นหลัก
+
+### ขั้นตอนที่ 8: ปรับแรงดันอ้างอิง
+
+1. พิมพ์ตัวเล็ก `r` แล้วกด Send หรือ Enter โปรแกรมตอบค่าเป็น **mV** เช่น `900` คือประมาณ 0.900 V
+2. หมุน potentiometer ทีละน้อยแล้วส่ง `r` ซ้ำจนใกล้ 900 mV
+3. ปล่อยมือและอ่านซ้ำเพื่อดูว่าค่านิ่งพอหรือไม่ โปรแกรมรับช่วง **700-1100 mV** หากนอกช่วงจะขึ้น `SET_REFERENCE` และไม่เริ่มวัด
+4. อย่าปรับค่าอ้างอิงระหว่างเปรียบเทียบตัวเก็บประจุโดยไม่บันทึกการเปลี่ยนและสอบเทียบใหม่
+
+### ขั้นตอนที่ 9: วัด baseline
+
+1. เริ่มจากวงจรที่ยังไม่ใส่ C ที่ทดสอบ แต่คงสายอื่นเหมือนเดิม
+2. ส่ง `m` ครั้งเดียวแล้วปล่อยมือห่างจากวงจร
+3. รอหัวตาราง CSV และข้อมูล **64 แถว** ให้ส่งครบ เก็บไฟล์แยกโดยระบุ `open_fixture`
+4. baseline นี้ไม่ใช่ตัวอ้างอิง 0 pF ที่ทราบค่าจริง เพราะสายและขา IC ยังมีความจุแฝง ถ้าวัดไม่ได้ให้เก็บสถานะผิดพลาดไว้ ไม่แทนด้วยศูนย์
+
+### ขั้นตอนที่ 10: วัดตัวเก็บประจุทั้งสี่ค่า
+
+1. ถอด USB ใส่ **5 pF** ระหว่างจุดวัด C กับ GND แล้วเสียบ USB ใหม่
+2. ส่ง `r` ตรวจค่าอ้างอิง แล้วกดปุ่มหนึ่งครั้งแล้วปล่อย หรือส่ง `m` ครั้งเดียว ใช้อย่างใดอย่างหนึ่งต่อ batch
+3. รอส่งข้อมูล 64 แถวครบก่อนเริ่ม batch ถัดไป ที่ 9600 baud การส่ง CSV ใช้เวลาหลายวินาที การส่งข้อมูลเกิดหลังการวัด
+4. เก็บ **5 batches** สำหรับ 5 pF แล้วทำเหมือนกันกับ **10, 15 และ 20 pF** ถอดไฟทุกครั้งที่เปลี่ยนอุปกรณ์
+5. ทำซ้ำ **3 sessions** ตาม Planning.md โดยมี power cycle และสลับลำดับค่าระหว่าง sessions เก็บวงจรและสายให้เหมือนเดิม
+
+อย่ากดหรือส่ง `m` ซ้ำระหว่างกำลังพิมพ์ข้อมูล เพราะคำสั่ง Serial อาจค้างในบัฟเฟอร์และเริ่ม batch ใหม่ภายหลัง
+
+หนึ่ง batch มี 64 การอ่านภายใน แต่ไม่ใช่ 64 การกดอิสระ ทั้งแผนมี 4 ค่า x 5 batches x 3 sessions = **60 batches** หรือสูงสุด 3,840 แถวภายใน ไม่รวม baseline
+
+## 5. อ่านและบันทึกผล
+
+```csv
+run,reading,cycles,elapsed_us,reference_mv,cpu_mhz,status
+```
+
+| คอลัมน์ | ความหมาย |
+| --- | --- |
+| `run` | ลำดับ batch เริ่มนับใหม่หลังรีเซ็ต ต้องใช้ร่วมกับ session/ชื่อไฟล์ |
+| `reading` | ลำดับการอ่านภายใน 1-64 |
+| `cycles` | จำนวน CPU cycles ที่จับได้ ถ้า status ผิดพลาด ค่า 0 ไม่ใช่ผลวัดจริง |
+| `elapsed_us` | เวลาหน่วยไมโครวินาที เว้นว่างเมื่อผิดพลาด |
+| `reference_mv` | แรงดันอ้างอิงที่อ่านก่อนเริ่ม batch |
+| `cpu_mhz` | ความถี่ CPU สำหรับแปลง cycles เป็นเวลา |
+| `status` | `ok`, `initial_low` หรือ `timeout` |
+
+คัดลอกหัวตารางหนึ่งบรรทัดและข้อมูล 64 แถวลง text editor แล้วบันทึก `.csv` เช่น `m1_5pf_session01_batch01.csv` อย่ารวมข้อความเริ่มต้น คำตอบจาก `r` หรือข้อความเตือนลงในตาราง CSV เก็บต้นฉบับ Serial แยกไว้ด้วย หากรวมหลาย batches ให้มีหัวตารางเพียงครั้งเดียว
+
+บันทึก metadata เพิ่มเติม: ค่าตามป้าย C, tolerance, session, batch, รุ่นบอร์ด/core, การตั้งค่า IDE, รูปวงจร และสิ่งที่เปลี่ยน โปรแกรมยังไม่ใส่ข้อมูลเหล่านี้ให้อัตโนมัติ
+
+## 6. แก้ปัญหาเบื้องต้น
+
+| อาการ | สิ่งที่ควรตรวจ |
+| --- | --- |
+| ไม่มีบอร์ดในเมนู | ติดตั้ง esp32 by Espressif Systems ให้เสร็จ |
+| ไม่มี COM port | ตรวจสาย USB ที่ส่งข้อมูลได้ ช่อง USB และการตรวจพบอุปกรณ์ |
+| Upload ค้างที่ Connecting | ตรวจพอร์ต ปิดโปรแกรมอื่นที่ใช้พอร์ต ลองกด BOOT ค้างขณะเริ่มเชื่อมต่อแล้วปล่อยเมื่อเริ่มอัปโหลด |
+| ข้อความ sketch อ่านไม่ออก | ตั้ง 9600 baud แล้วลองส่ง `r` |
+| `SET_REFERENCE` | ตรวจ wiper/GPIO34/กราวด์ และปรับใกล้ 900 mV |
+| `initial_low` | เอาต์พุตยัง LOW หลังคายประจุ ตรวจขา comparator, pullup และค่าอ้างอิง |
+| `timeout` | ไม่จับขอบขาลงภายใน 1 ms ตรวจ GPIO25, R 1 MOhm, GPIO27 และจุดวัด C |
+| ข้อมูลแกว่ง | ลดการสัมผัสและการเคลื่อนสาย ตรวจจุดต่อ บันทึกก่อนเปลี่ยนวงจร |
+| ค่าทั้งสี่ใกล้กันมาก | ความจุแฝงหรือความหน่วงอาจกลบความแตกต่าง ต้องวิเคราะห์ ไม่ปัดค่าให้ตรงป้าย |
+
+`ok` หมายถึงจับขอบสัญญาณได้ ไม่ได้รับรองความแม่นยำหรือยืนยันว่าขอบนั้นไม่มีสัญญาณรบกวน เก็บแถวผิดพลาดไว้ในข้อมูลดิบเสมอ
+
+## 7. กราฟและการสอบเทียบ
+
+เริ่มจากกราฟ **แกน X = ค่าความจุตามป้าย (pF)** และ **แกน Y = เวลาที่วัดได้ (us)** แสดงข้อมูลแต่ละ batch และความแปรปรวน พร้อมกราฟตามลำดับการอ่านและจำนวนครั้งที่ผิดพลาด
+
+| ค่าตามป้าย | ช่วง tolerance +/-5% |
+| --- | --- |
+| 5 pF | 4.75-5.25 pF |
+| 10 pF | 9.50-10.50 pF |
+| 15 pF | 14.25-15.75 pF |
+| 20 pF | 19.00-21.00 pF |
+
+ใช้ error bar แนวนอนสำหรับ tolerance ของตัวอ้างอิง และแนวตั้งสำหรับความแปรปรวนของผลวัด โดยระบุสถิติให้ชัดเจน **+/-5% เป็น tolerance ของตัวเก็บประจุ ไม่ใช่ความแม่นยำที่รับรองให้เครื่องวัด** การเฉลี่ยไม่ทำให้ tolerance หายไป
+
+สมการ RC อุดมคติเมื่อเริ่มจากคายประจุแล้ว:
+
+```text
+C = -t / (R * ln(1 - Vthreshold / Vcharge))
+```
+
+ใช้ t เป็นวินาที R เป็นโอห์ม ได้ C เป็นฟารัด และคูณ 1e12 เพื่อแปลงเป็น pF ห้ามใช้ `C = t/R` ตรง ๆ ที่ reference 900 mV เพราะสูตรย่อนั้นใช้เมื่อ threshold เท่ากับ 63.2% ของแรงดันชาร์จในกรณีอุดมคติ
+
+เวลาจริงรวม GPIO/interrupt latency, comparator delay และความจุแฝง โปรแกรมจึงยังไม่รายงาน pF หลังเห็นว่าข้อมูลแยกค่าทั้งสี่ได้แล้ว จึง fit calibration และกันตัวอ้างอิงหนึ่งค่าออกเพื่อทดสอบตาม Planning.md หากเปลี่ยนวงจร สาย หรือ firmware ให้บันทึก revision และตรวจ calibration ใหม่
+
+## 8. Arduino CLI และอ้างอิง
+
+ผู้ใช้ IDE ไม่จำเป็นต้องใช้ CLI หากติดตั้งไว้ สามารถคอมไพล์จากโฟลเดอร์หลัก repository ได้ด้วย:
 
 ```powershell
 arduino-cli compile --profile doit_esp32_devkit_v1 Track1/firmware/method1_test
 ```
 
-References: [Espressif IDE installation](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html), [ESP32 core 3.3.0 release](https://github.com/espressif/arduino-esp32/releases/tag/3.3.0), and [Arduino build profiles](https://docs.arduino.cc/arduino-cli/sketch-project-file/).
+คำสั่งนี้ใช้ profile ใน `sketch.yaml` แต่ไม่ได้อัปโหลดหรือทดสอบวงจรจริง
 
-## Wiring (power disconnected)
-
-For an LM393 DIP-8, verify the notch/dot and pin numbering before connecting:
-
-| Connection | Destination |
-| --- | --- |
-| LM393 pin 8 | ESP32 3.3 V |
-| LM393 pin 4 | GND |
-| 100 nF capacitor | Between LM393 pins 8 and 4, close to the chip |
-| 10 kOhm potentiometer outer terminals | 3.3 V and GND |
-| Potentiometer wiper | LM393 pin 3 (+) and ESP32 GPIO34 |
-| ESP32 GPIO25 | 1 MOhm resistor, then sensing node |
-| Sensing node | LM393 pin 2 (-) and one terminal of test capacitor |
-| Other test capacitor terminal | GND |
-| LM393 pin 1 (output) | GPIO27 and 10 kOhm pullup resistor to 3.3 V |
-| Momentary button | GPIO26 to GND |
-| Unused comparator | Pin 5 to GND, pin 6 to potentiometer wiper; leave pin 7 unconnected |
-
-Use short, fixed wires. GPIO34 measures only the reference, not the capacitor node. The output falls when the charging voltage crosses the reference. Never pull the output up to 5 V.
-
-The slide's 2.086 V reference is outside the ordinary LM393 common-mode range at a 3.3 V supply. Use about **900 mV** here, estimated by the ESP32 ADC. This is not a precision voltage measurement. See the [LM393 datasheet](https://www.ti.com/lit/ds/symlink/lm393.pdf).
-
-## Run the first experiment
-
-1. Open `method1_test.ino` in Arduino IDE. Select the actual ESP32 board and port, and record the installed ESP32 core version. This sketch needs only the ESP32 core.
-2. Upload and open Serial Monitor at **9600 baud**.
-3. Send `r`, adjust the potentiometer toward 900 mV, and repeat until stable. The sketch accepts 700-1100 mV.
-4. With the test capacitor disconnected, send `m` once to record the open-fixture baseline. Avoid touching the sensing node.
-5. Disconnect power, install the **5 pF** capacitor, and reconnect. Send `r` to verify the reference. Press and release the button once, or send `m`.
-6. Wait for all 64 CSV rows to finish printing before the next press. Save the output with the capacitor label, session, and circuit configuration. A batch takes several seconds to print at 9600 baud; printing occurs after acquisition.
-7. Collect five batches, then repeat for 10, 15, and 20 pF. Repeat across power-cycle sessions as specified in Planning.md.
-
-Keep raw data. `initial_low` means the comparator did not return high after discharge; check wiring, reference and pullup. `timeout` means no crossing was captured in 1 ms. Invalid rows have blank elapsed time.
-
-The recorded interval includes GPIO-start and interrupt latency, comparator delay, and parasitic capacitance. CPU-cycle timing improves resolution but does not eliminate those errors. The small reference capacitors have +/-5% tolerance. Do not use `C = t/R` at this threshold or label timing readings as measured pF.
-
-First plot elapsed time against nominal capacitance with horizontal +/-5% reference bars and vertical repeatability bars. Also plot readings in sequence and count failures. Fit timing-to-capacitance calibration only after checking that the four capacitors produce distinguishable readings. Keep this firmware/configuration and wire arrangement fixed during calibration.
-
-This sketch has not yet been compiled against the team's Arduino installation or tested on physical hardware.
+- [ติดตั้ง ESP32 ใน Arduino IDE](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html)
+- [ESP32 core 3.3.0](https://github.com/espressif/arduino-esp32/releases/tag/3.3.0)
+- [Arduino build profiles](https://docs.arduino.cc/arduino-cli/sketch-project-file/)
+- [LM393 datasheet](https://www.ti.com/lit/ds/symlink/lm393.pdf)
