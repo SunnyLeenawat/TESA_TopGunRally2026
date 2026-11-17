@@ -81,8 +81,6 @@ def spec_ok(
     deliberately small; raise them if results show ``SPEC_MISMATCH``.
     """
     m = dict(DEFAULT_MARGINS)
-    if margins:
-        m.update({str(k): _number(v) for k, v in margins.items()})
     try:
         defect = _number(sample["defect_pct"])
         moisture = _number(sample["moisture_pct"])
@@ -681,6 +679,194 @@ def llm_plan(
     }
 
 
+# ==========================================================================
+# TEAM LEARNING PLANNER (rules only, no LLM)
+# Learns each buyer's price level from past results, undercuts the last marginal
+# winner, paces sales by the calendar, and probes buyers in the practice round.
+# Tested in a mock of the organizer market; every number below is a tunable.
+# Set LEARN = False to go back to the stock behaviour (static markups + optional LLM).
+# ==========================================================================
+LEARN = True
+L_PRIOR = {"SPECIALTY": 1.12, "COMMERCIAL": 1.02, "INSTANT": 0.94}  # start markup per buyer type
+L_MIN, L_MAX = 0.86, 1.30      # salvage is 0.80, so below 0.86 is not worth selling
+L_PACE = 1.6                   # offer this multiple of an even share of each lot per remaining round
+L_UNDERCUT = 0.004             # go this far below last round's highest winning price at a buyer
+L_HI_GAP = 0.012               # stay this far below a price that was ABOVE_LIMIT
+L_PROBE_UP = 0.02              # buyer not filled last round: try this much above the best accepted price
+L_END_CUT = 0.95               # markup cap in the last real round
+L_SPEC_MARGIN = (0.15, 0.08)   # defect %, moisture % distance from the RFQ limit
+L_LADDER = {"INSTANT": [0.92, 1.00, 1.08], "COMMERCIAL": [0.98, 1.06, 1.15], "SPECIALTY": [1.08, 1.20, 1.30]}
+_WEIGHT_KEYS = ("demand_weight", "demand_factor", "demand_multiplier", "sell_multiplier", "weight")
+
+
+def _l_weights(calendar: Mapping[str, Any] | None, total: int, notes: list) -> dict[int, float]:
+    """Demand weight per round from GET /v1/calendar (any of the usual keys). Unknown format -> every round equal."""
+    w = {r: 1.0 for r in range(1, total + 1)}
+    try:
+        entries: list[Mapping[str, Any]] = []
+        if isinstance(calendar, Mapping):
+            for key in ("rounds", "timeline", "calendar"):
+                v = calendar.get(key)
+                if isinstance(v, list):
+                    entries += [e for e in v if isinstance(e, Mapping)]
+        elif isinstance(calendar, list):
+            entries = [e for e in calendar if isinstance(e, Mapping)]
+        for e in entries:
+            val = next((e[k] for k in _WEIGHT_KEYS if isinstance(e.get(k), (int, float))), None)
+            if val is None:
+                continue
+            rs = e.get("rounds", e.get("number", e.get("round")))
+            if rs is None and str(e.get("round_id", "")).lstrip("R").isdigit():
+                rs = int(str(e["round_id"]).lstrip("R"))
+            for r in ([rs] if isinstance(rs, (int, str)) else list(rs or [])):
+                if str(r).lstrip("R").isdigit():
+                    w[int(str(r).lstrip("R"))] = float(val)
+    except Exception as exc:  # noqa: BLE001
+        notes.append(f"calendar not parsed: {exc!r}")
+    return w
+
+
+def _l_learn(memory: Any, tv: Mapping[str, float]) -> dict[str, dict]:
+    """Replay every stored round (restart-safe). Per buyer: lo = highest markup that sold, hi = lowest ABOVE_LIMIT markup,
+    marg = highest winning markup last round if the RFQ was filled, room = RFQ not filled, out = lowest markup we were outbid at."""
+    data = getattr(memory, "data", {}) or {}
+    B: dict[str, dict] = {}
+    new = lambda: {"lo": 0.0, "hi": 9.9, "marg": None, "out": None, "room": False}  # noqa: E731
+    for rnd in data.get("rounds", []):
+        sent = {(o.get("rfq_id"), o.get("lot_id")): o for o in (data.get("sent", {}).get(rnd.get("round_id")) or [])}
+        buyer_of = {r.get("rfq_id"): r.get("buyer") for r in rnd.get("market_summary", [])}
+        mine: dict[str, list] = {}
+        for o in rnd.get("my_offers", []):
+            b = buyer_of.get(o.get("rfq_id"))
+            s = sent.get((o.get("rfq_id"), o.get("lot_id")))
+            lot_tv = tv.get(str(o.get("lot_id")))
+            m = (s or {}).get("markup") or (float(o.get("price_per_kg", 0)) / lot_tv if lot_tv else None)
+            if not b or not m:
+                continue
+            st = B.setdefault(b, new())
+            mine.setdefault(b, []).append((m, o.get("status")))
+            if o.get("status") in ("ACCEPTED", "PARTIAL"):
+                st["lo"] = max(st["lo"], m)
+            elif o.get("status") == "ABOVE_LIMIT":
+                st["hi"] = min(st["hi"], m)
+        for row in rnd.get("market_summary", []):
+            st = B.setdefault(row.get("buyer"), new())
+            ref = next((tv.get(str(o.get("lot_id"))) for o in rnd.get("my_offers", []) if o.get("rfq_id") == row.get("rfq_id")), None)
+            filled = (row.get("bought_kg") or 0) >= (row.get("wanted_kg") or 0)
+            st["marg"] = None
+            if row.get("price_max") is not None and ref:
+                r_hi = float(row["price_max"]) / ref
+                st["lo"] = max(st["lo"], r_hi)
+                st["marg"] = r_hi if filled else None
+            st["room"] = not filled
+        for b, lst in mine.items():
+            outs = [m for m, s in lst if s == "OUTBID"]
+            B[b]["out"] = min(outs) if outs else None
+    return B
+
+
+def _l_target(typ: str, st: dict | None, left: int, last_round: bool) -> tuple[float, float]:
+    """(markup to ask, rough chance it sells)."""
+    t, p = L_PRIOR.get(typ, 1.0), 0.7
+    if st:
+        if st["marg"] is not None:
+            t, p = st["marg"] - L_UNDERCUT, 0.6
+        elif st["room"] and st["lo"] > 0:
+            t, p = max(st["lo"] + L_PROBE_UP, 0.5 * (st["lo"] + L_PRIOR.get(typ, 1.0))), 0.9
+        if st["out"] is not None:
+            t = min(t, st["out"] - 0.008)
+        if st["hi"] < 9:
+            t = min(t, st["hi"] - L_HI_GAP)
+    if left <= 2:
+        t = min(t, max(0.92, (st["marg"] - 0.01) if st and st["marg"] else 0.97))
+    if last_round:
+        t = min(t, L_END_CUT)
+    return min(max(t, L_MIN), L_MAX), p
+
+
+def learned_plan(
+    state: Mapping[str, Any],
+    rules: Mapping[str, Any],
+    memory: Any,
+    *,
+    calendar: Mapping[str, Any] | None = None,
+    margins: Mapping[str, float] | None = None,
+    rng: random.Random | None = None,
+) -> dict[str, Any]:
+    rng = rng or random.Random()
+    bag = _bag(rules)
+    notes: list[str] = []
+    rnd = state.get("round") or {}
+    practice = rnd.get("kind") == "practice"
+    total = int(rnd.get("of") or rules.get("timeline", {}).get("rounds") or 8)
+    number = int(rnd.get("number") or 0)
+    left = total if practice else max(1, total - number + 1)
+    tv = estimate_lots(state.get("lots") or [], rules)
+    B = _l_learn(memory, tv)
+    w = _l_weights(calendar, total, notes)
+    cur = 1 if practice else min(max(1, number), total)
+    share = w.get(cur, 1.0) / (sum(w.get(r, 1.0) for r in range(cur, total + 1)) or 1.0)
+    capacity = state.get("capacity_left_kg")
+    room = float("inf") if capacity is None else max(0, int(capacity))
+    lots = {str(l["lot_id"]): l for l in (state.get("lots") or []) if str(l.get("lot_id")) in tv}
+    budget = {}
+    for lid, l in lots.items():
+        avail = max(0, int(l.get("kg_available") or 0)) // bag * bag
+        want = avail if left <= 1 else math.ceil(avail * share * L_PACE / bag) * bag
+        budget[lid] = min(avail, max(bag, want)) if avail >= bag else 0
+    mg = {"defect": L_SPEC_MARGIN[0], "moisture": L_SPEC_MARGIN[1], "screen": 0.0}
+    cands = []
+    for q in state.get("rfqs") or []:
+        if int(q.get("kg") or 0) < bag:
+            continue
+        t, p = _l_target(str(q.get("buyer_type")), B.get(q.get("buyer")), left, left == 1 and not practice)
+        for lid, l in lots.items():
+            if budget[lid] < bag or not spec_ok(l.get("sample") or {}, q.get("spec") or {}, mg):
+                continue
+            cands.append((p * (t - 0.8) * tv[lid] * rng.uniform(0.97, 1.03), lid, q, t))
+    cands.sort(key=lambda c: -c[0])
+    offers: list[dict[str, Any]] = []
+    seen: set = set()
+    rfq_left = {str(q.get("rfq_id")): int(q.get("kg") or 0) for q in state.get("rfqs") or []}
+    if practice:   # practice does not count: probe buyers at different price levels to find their ceilings
+        k = 0
+        for _, lid, q, t in cands:
+            if room < bag:
+                break
+            key = (lid, q["rfq_id"])
+            if key in seen or budget[lid] < bag:
+                continue
+            r = L_LADDER.get(str(q.get("buyer_type")), [1.0])[k % 3 if q.get("buyer_type") in L_LADDER else 0]
+            k += 1
+            offers.append(public_offer({"rfq_id": q["rfq_id"], "lot_id": lid, "kg": bag, "price_per_kg": _price(r, tv[lid])}))
+            seen.add(key)
+            room -= bag
+            budget[lid] -= bag
+        notes.append("learned planner: practice probe")
+    else:
+        for _, lid, q, t in cands:
+            key = (lid, q["rfq_id"])
+            if key in seen:
+                continue
+            used = sum(o["kg"] for o in offers if o["lot_id"] == lid)
+            kg = int(min(budget[lid], int(lots[lid].get("kg_available") or 0) - used, rfq_left[str(q["rfq_id"])], room)) // bag * bag
+            if kg < bag:
+                continue
+            offers.append(public_offer({"rfq_id": q["rfq_id"], "lot_id": lid, "kg": kg, "price_per_kg": _price(t, tv[lid])}))
+            seen.add(key)
+            budget[lid] -= kg
+            rfq_left[str(q["rfq_id"])] -= kg
+            room -= kg
+            if room < bag:
+                break
+        notes.append(f"learned planner: {len(B)} buyers known")
+    offers, dropped = guard_offers(offers, state, rules, margins=margins)
+    for item in dropped[:3]:
+        notes.append(f"dropped {item.get('rfq_id', '?')}/{item.get('lot_id', '?')}: {item.get('reason', '?')}")
+    return {"offers": offers, "source": "rules-learned" if offers else "none", "notes": notes, "markup": {}, "reason": "",
+            "budget_kg": int(sum(o["kg"] for o in offers)), "llm_error": None}
+
+
 # --------------------------------------------------------------------------
 # Public entry point used by main.py
 # --------------------------------------------------------------------------
@@ -697,12 +883,23 @@ def decide(
     rng: random.Random | None = None,
 ) -> dict[str, Any]:
     """Return ``{offers, source, notes, markup, ...}`` for one ROUND_OPEN."""
+    if LEARN and memory is not None:
+        try:
+            decision = learned_plan(state, rules, memory, calendar=calendar, margins=margins, rng=rng)
+            if decision["offers"] or (state.get("round") or {}).get("kind") == "practice":
+                return decision
+        except Exception as exc:  # noqa: BLE001 - never lose a round to a bug; fall through to the stock planner
+            learn_error = f"learned planner failed: {type(exc).__name__}: {exc}"
+        else:
+            learn_error = ""
+    else:
+        learn_error = ""
     base_markup = {**MARKUP, **(markup or {})}
     pace = float(getattr(settings, "pace", 1.3) or 1.3)
     if margins is None and settings is not None and hasattr(settings, "margins"):
         margins = settings.margins()
     budget = sell_budget(state, rules, calendar=calendar, pace=pace)
-    notes: list[str] = []
+    notes: list[str] = [learn_error] if learn_error else []
 
     seconds_left = state.get("seconds_left")
     llm_allowed = (
