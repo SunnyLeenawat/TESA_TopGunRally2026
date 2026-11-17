@@ -1,0 +1,2 @@
+# Python PC-side serial capture only; not an Arduino library.
+pyserial==3.5

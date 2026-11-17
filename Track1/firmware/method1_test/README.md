@@ -240,3 +240,29 @@ arduino-cli compile --profile doit_esp32_devkit_v1 Track1/firmware/method1_test
 - [ESP32 core 3.3.0](https://github.com/espressif/arduino-esp32/releases/tag/3.3.0)
 - [Arduino build profiles](https://docs.arduino.cc/arduino-cli/sketch-project-file/)
 - [LM393 datasheet](https://www.ti.com/lit/ds/symlink/lm393.pdf)
+
+## 9. บันทึก CSV อัตโนมัติแทนการคัดลอก Serial Monitor
+
+ใช้ `capture_serial.py` บนคอมพิวเตอร์เพื่อส่ง m ทีละ batch และบันทึกทั้ง CSV กับข้อความ Serial ดิบ ไม่ต้องเปลี่ยน firmware
+
+1. ปรับ reference ใกล้ 900 mV ใน Serial Monitor ให้เรียบร้อยและจด COM port
+2. **ปิด Serial Monitor และ Serial Plotter** เพื่อให้ Python ใช้พอร์ตได้
+3. เปิด Terminal ที่โฟลเดอร์หลัก repository แล้วติดตั้ง dependency ของ Python:
+
+   ```powershell
+   python -m pip install -r Track1/firmware/method1_test/requirements.txt
+   ```
+
+4. ถ้าใส่ C 5 pF และบอร์ดอยู่ COM5 ให้รัน:
+
+   ```powershell
+   python Track1/firmware/method1_test/capture_serial.py --port COM5 --sample 5pf --batches 5
+   ```
+
+5. เปลี่ยน COM5 ให้ตรงกับเครื่อง และเปลี่ยน sample เป็น 10pf, 15pf, 20pf หรือ open_fixture ตามสิ่งที่ต่อจริง สคริปต์ไม่สามารถตรวจค่าที่ใส่ให้อัตโนมัติ
+6. สคริปต์ส่ง m ให้อัตโนมัติ ห้ามกดปุ่มหรือเปิด Serial Monitor ระหว่างทำงาน รอข้อความ Capture complete
+7. ไฟล์อยู่ในโฟลเดอร์ `data` ข้างสคริปต์ มีวันเวลาและชื่อ sample ในชื่อไฟล์ CSV เพิ่มคอลัมน์ sample และ batch ให้แล้ว เก็บแถวที่ status ผิดพลาดไว้ด้วย
+
+หาก timeout หรือ reference ไม่ถูกต้อง โปรแกรมจะหยุดและเก็บข้อมูลบางส่วนไว้ อย่านับไฟล์ที่หยุดกลางทางเป็นการทดลองครบชุด สามารถหยุดเองด้วย Ctrl+C การเปิดพอร์ตอาจรีเซ็ตบอร์ดและทำให้ run เริ่มนับใหม่
+
+สคริปต์ยังไม่ได้ทดสอบกับบอร์ดจริง
