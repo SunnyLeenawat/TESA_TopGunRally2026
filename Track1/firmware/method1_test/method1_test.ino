@@ -5,6 +5,8 @@
 // Raw timing only: calibrate against the supplied capacitors before reporting pF.
 constexpr int CHARGE_PIN = 25;
 constexpr int COMPARATOR_PIN = 27;
+// LM393 OUT1 -> GPIO27, with external 2 kOhm pullup to 3.3 V.
+// IN+ = reference, IN- = charging capacitor: capture HIGH -> LOW.
 constexpr int REFERENCE_PIN = 34;
 constexpr int BUTTON_PIN = 26;
 constexpr unsigned SAMPLE_COUNT = 64;
