@@ -1,0 +1,13 @@
+# Host training image. torch and torchvision come from the CUDA base image.
+# Do not add torch here: a PyPI wheel would replace the CUDA build.
+ultralytics==8.4.212
+pytest==9.2.0
+matplotlib==3.11.2
+pyyaml==6.0.3
+onnx==1.23.2
+onnxslim==0.1.99
+ncnn==1.0.20261020
+# Pinned to the build Ultralytics 8.4.212 asks for. A newer PNNX segfaults on NCNN load.
+pnnx==20260526
+# Train-image only. The Pi kNN stays in numpy; this is for the latent t-SNE plot.
+scikit-learn==1.7.2

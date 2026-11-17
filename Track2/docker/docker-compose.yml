@@ -1,0 +1,33 @@
+name: coffee-edge
+
+services:
+  train:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.train
+    image: coffee-edge-train:phase0
+    working_dir: /app
+    shm_size: "2gb"
+    # CDI device. `gpus: all` fails on this Docker with "AMD CDI spec not found".
+    devices:
+      - nvidia.com/gpu=all
+    environment:
+      COFFEE_DATA_DIR: /data
+      COFFEE_OUTPUT_DIR: /data/outputs
+      COFFEE_MODEL_DIR: /data/models
+      COFFEE_DEVICE: "0"
+    volumes:
+      - ${HOST_DATA_DIR:?Set HOST_DATA_DIR in .env}:/data
+
+  pi:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.pi
+    image: coffee-edge-pi:phase0
+    working_dir: /app
+    environment:
+      COFFEE_DATA_DIR: /data
+      COFFEE_OUTPUT_DIR: /data/outputs
+      COFFEE_MODEL_DIR: /data/models
+    volumes:
+      - ${HOST_DATA_DIR:?Set HOST_DATA_DIR in .env}:/data

@@ -1,0 +1,118 @@
+# All paths live here. Override with COFFEE_* environment variables or CLI flags.
+# ${VAR:-default} is expanded when the file is loaded.
+# Relative paths are resolved from the repository root (parent of config/).
+# Inside Docker, compose sets COFFEE_DATA_DIR=/data (the single bind mount).
+
+day: ${COFFEE_DAY:-1}
+seed: 42
+
+paths:
+  data_dir: ${COFFEE_DATA_DIR:-data}
+  output_dir: ${COFFEE_OUTPUT_DIR:-outputs}
+  model_dir: ${COFFEE_MODEL_DIR:-models}
+
+# Ids are the list index. Folder names must match exactly.
+classes:
+  - good
+  - shell
+  - full_black
+  - hull_husk
+  - broken
+  - parchment
+  - immature
+
+dataset:
+  train_dirname: train
+  test_dirname: test
+  day3_dirname: day3
+  mock_dirname: mock
+  samples_dirname: _sample
+  layout_suffix: .layout.txt
+  image_extensions: [".jpg", ".jpeg", ".png", ".bmp", ".webp"]
+  # Sample filename stem, letters and digits only, lower case -> class folder.
+  sample_aliases:
+    good: good
+    shell: shell
+    fullblack: full_black
+    hull: hull_husk
+    broken: broken
+    parchment: parchment
+    unripe: immature
+
+extract:
+  # fastsam on the host. classical is the high-contrast fallback and the unit-test path.
+  # Wood and green beans share a hue on the sample photos, so a color threshold misses them.
+  backend: fastsam
+  weights_name: FastSAM-s.pt
+  imgsz: 640
+  conf: 0.4
+  min_area_frac: 0.001
+  max_area_frac: 0.08
+  max_aspect: 2.6
+  lab_distance: 28
+
+synth:
+  images_per_class: 3
+  day3_images_per_pattern: 2
+  pile_beans_min: 16
+  pile_beans_max: 28
+  mixed_classes_min: 3
+  val_fraction: 0.34
+  canvas_width: 960
+  canvas_height: 640
+
+labels:
+  # Only format this project reads or writes.
+  # One .txt per image, same stem: class_id x1 y1 x2 y2 ... normalized polygon.
+  format: yolo_seg_txt
+
+yolo:
+  weights_name: yolo26n-seg.pt
+  imgsz: ${COFFEE_IMGSZ:-640}
+  device: ${COFFEE_DEVICE:-0}
+  epochs: 50
+  batch: 8
+  patience: 20
+  workers: 2
+  mosaic: 1.0
+  close_mosaic: 10
+  degrees: 15.0
+  scale: 0.5
+  flipud: 0.5
+  fliplr: 0.5
+  hsv_h: 0.015
+  hsv_s: 0.5
+  hsv_v: 0.4
+  copy_paste: 0.3
+  conf: 0.25
+  iou: 0.5
+
+ncnn:
+  threads: ${COFFEE_NCNN_THREADS:-4}
+  use_vulkan: false
+
+autoencoder:
+  enabled: true
+  # Mock-set ablation did not beat YOLO. Turn on after checking outputs/ae/ablation.yaml.
+  fusion_enabled: false
+  crop_size: 64
+  latent_dim: 32
+  epochs: 40
+  batch: 32
+  lr: 0.001
+  val_fraction: 0.2
+  knn_k: 5
+  knn_share: 0.6
+  low_conf: 0.45
+  anomaly_quantile: 0.95
+  # Second-stage fusion only reconsider these pairs, plus a high anomaly on "good".
+  confusable:
+    - [good, immature]
+    - [good, parchment]
+    - [shell, broken]
+    - [full_black, hull_husk]
+    - [broken, immature]
+
+infer:
+  # Dataset folders and single images. No camera.
+  sources: [image, folder]

@@ -1,0 +1,8 @@
+# Kept so the documented two-file command still selects the GPU.
+# The base compose file already requests nvidia.com/gpu=all via CDI.
+services:
+  train:
+    devices:
+      - nvidia.com/gpu=all
+    environment:
+      COFFEE_DEVICE: "0"

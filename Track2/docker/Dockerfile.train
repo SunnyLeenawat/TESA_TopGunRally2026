@@ -1,0 +1,29 @@
+# Host training image. CUDA 12.6 wheels run on the RTX 4060 driver (CUDA 13.4).
+# The GPU is visible only when nvidia-container-toolkit is installed and
+# docker-compose.gpu.yml is added. torch stays the image build; do not pip-install it.
+FROM pytorch/pytorch:2.12.1-cuda12.6-cudnn9-runtime
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_ROOT_USER_ACTION=ignore \
+    PIP_BREAK_SYSTEM_PACKAGES=1 \
+    PYTHONPATH=/app/src
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libglib2.0-0 libgomp1 libgl1 git \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements/train.txt /tmp/requirements.train.txt
+# The CUDA base image marks Debian Python as externally managed (PEP 668).
+# Packages install beside the image's torch; do not replace torch from PyPI.
+RUN pip install --no-cache-dir --break-system-packages -r /tmp/requirements.train.txt \
+    && python -c "import torch, ultralytics, onnx, yaml; print('train imports ok', torch.__version__)"
+
+COPY config /app/config
+COPY src /app/src
+COPY tests /app/tests
+COPY pyproject.toml /app/pyproject.toml
+
+CMD ["python", "-m", "coffee.hello"]

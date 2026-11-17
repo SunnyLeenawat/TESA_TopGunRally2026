@@ -1,0 +1,16 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+outputs/
+models/
+dist/
+data/outputs/
+data/models/
+data/train/
+data/test/
+*.pt
+*.onnx
+*_ncnn_model/

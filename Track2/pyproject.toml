@@ -1,0 +1,9 @@
+[project]
+name = "coffee-edge"
+version = "0.1.0"
+description = "TESA Top Gun 2026 Track 2 edge coffee-bean inspector"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
