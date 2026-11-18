@@ -69,7 +69,7 @@ dont sell lower than 95.80baht/kg
 TV normal = 119.75baht/kg
 
 
-http://161.246.199.191:8001/trade
+http://161.246.199.191:8000/trade
 
 key ของทีม
 sk-T55-cXCK6yF6JN5PwxFN7VB0ORYf
@@ -99,4 +99,8 @@ OUTBID: drop to the highest sold price but not below 0.88
 ABOVE_LIMIT: drop 0.05
 
 Round 6 = offer everythng at 0.90
+
+Day 18
+PR = price realization = diff from TV
+
 ```

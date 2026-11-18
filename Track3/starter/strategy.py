@@ -689,40 +689,74 @@ def llm_plan(
 # Set LEARN = False to go back to the stock behaviour (static markups + optional LLM).
 # ==========================================================================
 LEARN = True
-L_PRIOR = {"SPECIALTY": 1.12, "COMMERCIAL": 1.02, "INSTANT": 0.94}  # start markup per buyer type
+L_PRIOR = {"SPECIALTY": 1.00, "COMMERCIAL": 1.00, "INSTANT": 0.90}   # start low: overshooting wastes whole rounds, undershooting costs a few %  # start markup per buyer type
 L_MIN, L_MAX = 0.86, 1.30      # salvage is 0.80, so below 0.86 is not worth selling
 L_PACE = 1.6                   # offer this multiple of an even share of each lot per remaining round
 L_UNDERCUT = 0.004             # go this far below last round's highest winning price at a buyer
-L_HI_GAP = 0.012               # stay this far below a price that was ABOVE_LIMIT
-L_PROBE_UP = 0.02              # buyer not filled last round: try this much above the best accepted price
+L_HI_GAP = 0.04                # stay this far below a price that was ABOVE_LIMIT at that buyer
+L_TYPE_GAP = 0.02              # an ABOVE_LIMIT at one buyer also caps other buyers of the same type, minus this gap
+L_TYPE_CAP = {"INSTANT": 0.93, "COMMERCIAL": 1.03, "SPECIALTY": 1.03}   # never ask above this per buyer type (seen in sandbox: Instant ~0.95-0.97, Commercial ~1.06-1.09)
+L_PROBE_UP = 0.01              # buyer not filled last round: try this much above the best accepted price
 L_END_CUT = 0.95               # markup cap in the last real round
-L_SPEC_MARGIN = (0.15, 0.08)   # defect %, moisture % distance from the RFQ limit
+DAY1_EXACT = False             # True only if the sample is exactly the real lot (Day 1 own market). Stage 2 and 3 samples are noisy: keep False.
+L_SPEC_MARGIN = (0.0, 0.0) if DAY1_EXACT else (0.15, 0.08)   # defect %, moisture % distance from the RFQ limit
+L_MKT_CAP = 0.0                # a market-wide price can only lift our ask this far above what we have really sold at (or the prior)
+L_END_CUT_2 = 0.97             # markup cap in the second-to-last round
 L_LADDER = {"INSTANT": [0.92, 1.00, 1.08], "COMMERCIAL": [0.98, 1.06, 1.15], "SPECIALTY": [1.08, 1.20, 1.30]}
 _WEIGHT_KEYS = ("demand_weight", "demand_factor", "demand_multiplier", "sell_multiplier", "weight")
 
 
+def _l_rounds(rs: Any) -> list[int]:
+    """Round numbers from any of: 5, "5", "1-8", "6-8, 11", [1, 2, 3], {"from": 1, "to": 5}."""
+    import re
+    out: list[int] = []
+    if isinstance(rs, bool):
+        return out
+    if isinstance(rs, (int, float)):
+        return [int(rs)]
+    if isinstance(rs, str):
+        for part in re.split(r"[,\s]+", rs.replace("\u2013", "-").replace("\u2014", "-").replace("R", "").replace("r", "")):
+            if not part:
+                continue
+            if "-" in part:
+                a, _, b = part.partition("-")
+                if a.isdigit() and b.isdigit():
+                    out += list(range(int(a), int(b) + 1))
+            elif part.isdigit():
+                out.append(int(part))
+        return out
+    if isinstance(rs, Mapping):
+        a = rs.get("from", rs.get("start"))
+        b = rs.get("to", rs.get("end", a))
+        if a is not None and b is not None:
+            return list(range(int(a), int(b) + 1))
+        return out
+    if isinstance(rs, (list, tuple)):
+        for x in rs:
+            out += _l_rounds(x)
+    return out
+
+
 def _l_weights(calendar: Mapping[str, Any] | None, total: int, notes: list) -> dict[int, float]:
-    """Demand weight per round from GET /v1/calendar (any of the usual keys). Unknown format -> every round equal."""
+    """Demand weight per round from GET /v1/calendar ("calendar" list: rounds like "1-8", demand_weight). Unknown format -> every round equal."""
     w = {r: 1.0 for r in range(1, total + 1)}
     try:
         entries: list[Mapping[str, Any]] = []
         if isinstance(calendar, Mapping):
-            for key in ("rounds", "timeline", "calendar"):
+            for key in ("calendar", "rounds", "timeline"):
                 v = calendar.get(key)
                 if isinstance(v, list):
                     entries += [e for e in v if isinstance(e, Mapping)]
         elif isinstance(calendar, list):
             entries = [e for e in calendar if isinstance(e, Mapping)]
         for e in entries:
-            val = next((e[k] for k in _WEIGHT_KEYS if isinstance(e.get(k), (int, float))), None)
+            val = next((e[k] for k in _WEIGHT_KEYS if isinstance(e.get(k), (int, float)) and not isinstance(e.get(k), bool)), None)
             if val is None:
                 continue
-            rs = e.get("rounds", e.get("number", e.get("round")))
-            if rs is None and str(e.get("round_id", "")).lstrip("R").isdigit():
-                rs = int(str(e["round_id"]).lstrip("R"))
-            for r in ([rs] if isinstance(rs, (int, str)) else list(rs or [])):
-                if str(r).lstrip("R").isdigit():
-                    w[int(str(r).lstrip("R"))] = float(val)
+            rs = e.get("rounds", e.get("number", e.get("round", e.get("round_id"))))
+            for r in _l_rounds(rs):
+                if 1 <= r <= total:
+                    w[r] = float(val)
     except Exception as exc:  # noqa: BLE001
         notes.append(f"calendar not parsed: {exc!r}")
     return w
@@ -733,11 +767,13 @@ def _l_learn(memory: Any, tv: Mapping[str, float]) -> dict[str, dict]:
     marg = highest winning markup last round if the RFQ was filled, room = RFQ not filled, out = lowest markup we were outbid at."""
     data = getattr(memory, "data", {}) or {}
     B: dict[str, dict] = {}
+    type_hi: dict[str, float] = {}
     new = lambda: {"lo": 0.0, "hi": 9.9, "marg": None, "out": None, "room": False}  # noqa: E731
     for rnd in data.get("rounds", []):
         sent = {(o.get("rfq_id"), o.get("lot_id")): o for o in (data.get("sent", {}).get(rnd.get("round_id")) or [])}
         buyer_of = {r.get("rfq_id"): r.get("buyer") for r in rnd.get("market_summary", [])}
         mine: dict[str, list] = {}
+        is_practice = rnd.get("kind") == "practice"
         for o in rnd.get("my_offers", []):
             b = buyer_of.get(o.get("rfq_id"))
             s = sent.get((o.get("rfq_id"), o.get("lot_id")))
@@ -746,28 +782,39 @@ def _l_learn(memory: Any, tv: Mapping[str, float]) -> dict[str, dict]:
             if not b or not m:
                 continue
             st = B.setdefault(b, new())
-            mine.setdefault(b, []).append((m, o.get("status")))
-            if o.get("status") in ("ACCEPTED", "PARTIAL"):
+            if not is_practice:
+                mine.setdefault(b, []).append((m, o.get("status")))
+            if o.get("status") in ("ACCEPTED", "PARTIAL") and not is_practice:
                 st["lo"] = max(st["lo"], m)
+                st["own_lo"] = max(st.get("own_lo", 0.0), m)
             elif o.get("status") == "ABOVE_LIMIT":
                 st["hi"] = min(st["hi"], m)
+                typ = next((r.get("buyer_type") for r in rnd.get("market_summary", []) if r.get("rfq_id") == o.get("rfq_id")), None)
+                if typ:
+                    type_hi[typ] = min(type_hi.get(typ, 9.9), m)
         for row in rnd.get("market_summary", []):
+            if is_practice:      # practice prices are not the real clearing prices: do not learn levels from them
+                continue
             st = B.setdefault(row.get("buyer"), new())
             ref = next((tv.get(str(o.get("lot_id"))) for o in rnd.get("my_offers", []) if o.get("rfq_id") == row.get("rfq_id")), None)
             filled = (row.get("bought_kg") or 0) >= (row.get("wanted_kg") or 0)
             st["marg"] = None
             if row.get("price_max") is not None and ref:
                 r_hi = float(row["price_max"]) / ref
+                base = max(st.get("own_lo", 0.0), L_PRIOR.get(str(row.get("buyer_type")), 1.0))
+                r_hi = min(r_hi, base + L_MKT_CAP)
                 st["lo"] = max(st["lo"], r_hi)
                 st["marg"] = r_hi if filled else None
             st["room"] = not filled
+            st["crowd"] = (row.get("offers") or 0) / max(1.0, (row.get("wanted_kg") or 0) / 60.0)   # offers per wanted bag
         for b, lst in mine.items():
             outs = [m for m, s in lst if s == "OUTBID"]
             B[b]["out"] = min(outs) if outs else None
+    B["__type_hi__"] = type_hi
     return B
 
 
-def _l_target(typ: str, st: dict | None, left: int, last_round: bool) -> tuple[float, float]:
+def _l_target(typ: str, st: dict | None, left: int, last_round: bool, type_hi: float = 9.9, pressure: float = 0.0) -> tuple[float, float]:
     """(markup to ask, rough chance it sells)."""
     t, p = L_PRIOR.get(typ, 1.0), 0.7
     if st:
@@ -779,10 +826,18 @@ def _l_target(typ: str, st: dict | None, left: int, last_round: bool) -> tuple[f
             t = min(t, st["out"] - 0.008)
         if st["hi"] < 9:
             t = min(t, st["hi"] - L_HI_GAP)
+    if type_hi < 9:
+        t = min(t, type_hi - L_TYPE_GAP)
+    t = min(t, L_TYPE_CAP.get(typ, L_MAX))
+    if st and st.get("crowd") is not None:      # many offers per wanted bag = hard to win; few = easy
+        c = st["crowd"]
+        p = 0.95 if (c < 0.6 and st["room"]) else p * (0.5 if c >= 2.0 else 0.8 if c >= 1.0 else 1.0)
+    if pressure > 0.7:                           # lots of stock left for the capacity we have: lower the ask to clear it (leftover pays only 0.80)
+        t -= min(0.06, 0.12 * (pressure - 0.7))
     if left <= 2:
-        t = min(t, max(0.92, (st["marg"] - 0.01) if st and st["marg"] else 0.97))
+        t = min(t, max(0.90, (st["marg"] - 0.01) if st and st["marg"] else L_END_CUT_2))
     if last_round:
-        t = min(t, L_END_CUT)
+        t = min(t, L_END_CUT if pressure < 0.8 else 0.88)
     return min(max(t, L_MIN), L_MAX), p
 
 
@@ -794,8 +849,10 @@ def learned_plan(
     calendar: Mapping[str, Any] | None = None,
     margins: Mapping[str, float] | None = None,
     rng: random.Random | None = None,
+    pace: float | None = None,
 ) -> dict[str, Any]:
     rng = rng or random.Random()
+    pace = float(pace) if pace else L_PACE
     bag = _bag(rules)
     notes: list[str] = []
     rnd = state.get("round") or {}
@@ -810,22 +867,37 @@ def learned_plan(
     share = w.get(cur, 1.0) / (sum(w.get(r, 1.0) for r in range(cur, total + 1)) or 1.0)
     capacity = state.get("capacity_left_kg")
     room = float("inf") if capacity is None else max(0, int(capacity))
+    stock_left = sum(max(0, int(l.get("kg_remaining") or 0)) for l in state.get("lots") or [])
+    pressure = 0.0 if practice or not room or room == float("inf") else stock_left / (room * left)
+    try:
+        room = min(room, sell_budget(state, rules, calendar=calendar, pace=pace))   # same cap main.py applies, so no offer is cut afterwards
+    except Exception:  # noqa: BLE001
+        pass
     lots = {str(l["lot_id"]): l for l in (state.get("lots") or []) if str(l.get("lot_id")) in tv}
     budget = {}
     for lid, l in lots.items():
         avail = max(0, int(l.get("kg_available") or 0)) // bag * bag
-        want = avail if left <= 1 else math.ceil(avail * share * L_PACE / bag) * bag
+        want = avail if left <= 1 else math.ceil(avail * share * pace / bag) * bag
         budget[lid] = min(avail, max(bag, want)) if avail >= bag else 0
     mg = {"defect": L_SPEC_MARGIN[0], "moisture": L_SPEC_MARGIN[1], "screen": 0.0}
-    cands = []
-    for q in state.get("rfqs") or []:
-        if int(q.get("kg") or 0) < bag:
-            continue
-        t, p = _l_target(str(q.get("buyer_type")), B.get(q.get("buyer")), left, left == 1 and not practice)
-        for lid, l in lots.items():
-            if budget[lid] < bag or not spec_ok(l.get("sample") or {}, q.get("spec") or {}, mg):
+    guard_margins = margins
+    cands: list = []
+    for attempt in (0, 1):
+        cands = []
+        for q in state.get("rfqs") or []:
+            if int(q.get("kg") or 0) < bag:
                 continue
-            cands.append((p * (t - 0.8) * tv[lid] * rng.uniform(0.97, 1.03), lid, q, t))
+            t, p = _l_target(str(q.get("buyer_type")), B.get(q.get("buyer")), left, left == 1 and not practice, B.get("__type_hi__", {}).get(str(q.get("buyer_type")), 9.9), pressure)
+            for lid, l in lots.items():
+                if budget[lid] < bag or not spec_ok(l.get("sample") or {}, q.get("spec") or {}, mg):
+                    continue
+                cands.append((p * (t - 0.8) * tv[lid] * rng.uniform(0.97, 1.03), lid, q, t))
+        if cands or attempt or left > 2 or practice:
+            break
+        # Nothing passes the margins but stock is running out: stock left at the end is paid only 0.80, so allow lots sitting on a limit.
+        mg = {"defect": 0.0, "moisture": 0.0, "screen": 0.0}
+        guard_margins = {"defect": 0.0, "moisture": 0.0, "screen": 0.0}
+        notes.append("learned planner: spec margins relaxed to 0 to clear stock")
     cands.sort(key=lambda c: -c[0])
     offers: list[dict[str, Any]] = []
     seen: set = set()
@@ -862,7 +934,7 @@ def learned_plan(
             if room < bag:
                 break
         notes.append(f"learned planner: {len(B)} buyers known")
-    offers, dropped = guard_offers(offers, state, rules, margins=margins)
+    offers, dropped = guard_offers(offers, state, rules, margins=guard_margins)
     for item in dropped[:3]:
         notes.append(f"dropped {item.get('rfq_id', '?')}/{item.get('lot_id', '?')}: {item.get('reason', '?')}")
     return {"offers": offers, "source": "rules-learned" if offers else "none", "notes": notes, "markup": {}, "reason": "",
@@ -887,7 +959,7 @@ def decide(
     """Return ``{offers, source, notes, markup, ...}`` for one ROUND_OPEN."""
     if LEARN and memory is not None:
         try:
-            decision = learned_plan(state, rules, memory, calendar=calendar, margins=margins, rng=rng)
+            decision = learned_plan(state, rules, memory, calendar=calendar, margins=margins, rng=rng, pace=getattr(settings, "pace", None))
             if decision["offers"] or (state.get("round") or {}).get("kind") == "practice":
                 return decision
         except Exception as exc:  # noqa: BLE001 - never lose a round to a bug; fall through to the stock planner
