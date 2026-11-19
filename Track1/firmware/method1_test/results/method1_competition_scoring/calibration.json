@@ -1,0 +1,1537 @@
+{
+  "sources": [
+    {
+      "nominal_pf": 5,
+      "file": "20261117_191532_611032_5pf.csv",
+      "sha256": "3cd87a938b52db88d3a2102641d2c57409497d4e186d757475a83e2fe7ca0d3a",
+      "session": 1
+    },
+    {
+      "nominal_pf": 10,
+      "file": "20261117_192226_294059_10pf.csv",
+      "sha256": "a193561924b72017dfa8215c29772d7ab76f706f54633b48b87d7513809b53e9",
+      "session": 1
+    },
+    {
+      "nominal_pf": 15,
+      "file": "20261117_200129_124924_15pf.csv",
+      "sha256": "30fc08c031a8768596a65d69c50ce6cd074932c8efac3466412f1f0464055733",
+      "session": 1
+    },
+    {
+      "nominal_pf": 20,
+      "file": "20261117_200506_323610_20pf.csv",
+      "sha256": "39b884ee3037bc279b60dc14bb0c967bec728bdb48e5585c68ed72ae605277b7",
+      "session": 1
+    },
+    {
+      "nominal_pf": 5,
+      "file": "20261117_201611_317984_5pf.csv",
+      "sha256": "7a33d2e316922fd87e72a0d9834f4e431cf0f0595365214c8518cc14f849dd7d",
+      "session": 2
+    },
+    {
+      "nominal_pf": 10,
+      "file": "20261117_201504_115277_10pf.csv",
+      "sha256": "8e10a964bfaedd8cbf460ee56060752949db8d23160dfd4f9a436945635e6e65",
+      "session": 2
+    },
+    {
+      "nominal_pf": 15,
+      "file": "20261117_201334_003271_15pf.csv",
+      "sha256": "4f7c3decf2ad22c96a88329934fe23918ffaa9186237bdced2d4b55862bd34a7",
+      "session": 2
+    },
+    {
+      "nominal_pf": 20,
+      "file": "20261117_201206_298023_20pf.csv",
+      "sha256": "73befb24f298b41459469829f128d97f9e2a62655a5af2cfa12ef2470ed0b350",
+      "session": 2
+    }
+  ],
+  "batch_count": 40,
+  "raw_reading_count": 2560,
+  "aggregation": "Median of all 64 cycle counts / 240 MHz; no outliers removed",
+  "selection": "degree_1_absolute",
+  "comparison": {
+    "degree_1_absolute": {
+      "leave_session_out": {
+        "rmse_pf": 0.36378102496716735,
+        "organizer_rmse_value": 36.378102496716735,
+        "five_press_scores": [
+          {
+            "session": 1,
+            "nominal_pf": 5,
+            "readings_pf": [
+              5.35,
+              5.42,
+              5.35,
+              5.33,
+              5.37
+            ],
+            "valid": true,
+            "mean_pf": 5.364,
+            "accuracy_formula_value": 36.39999999999999,
+            "rmse_pf": 0.36529440181858785,
+            "rmse_formula_value": 36.52944018185879,
+            "accuracy_points": 4,
+            "rmse_points": 2,
+            "total_points": 6
+          },
+          {
+            "session": 1,
+            "nominal_pf": 10,
+            "readings_pf": [
+              10.48,
+              10.48,
+              10.29,
+              10.31,
+              10.48
+            ],
+            "valid": true,
+            "mean_pf": 10.408,
+            "accuracy_formula_value": 40.79999999999995,
+            "rmse_pf": 0.41746856169057833,
+            "rmse_formula_value": 41.746856169057835,
+            "accuracy_points": 3,
+            "rmse_points": 1,
+            "total_points": 4
+          },
+          {
+            "session": 1,
+            "nominal_pf": 15,
+            "readings_pf": [
+              15.52,
+              15.37,
+              15.17,
+              15.39,
+              15.39
+            ],
+            "valid": true,
+            "mean_pf": 15.368,
+            "accuracy_formula_value": 36.80000000000003,
+            "rmse_pf": 0.3848116422355228,
+            "rmse_formula_value": 38.48116422355228,
+            "accuracy_points": 4,
+            "rmse_points": 2,
+            "total_points": 6
+          },
+          {
+            "session": 1,
+            "nominal_pf": 20,
+            "readings_pf": [
+              19.84,
+              19.63,
+              19.91,
+              19.74,
+              19.69
+            ],
+            "valid": true,
+            "mean_pf": 19.762,
+            "accuracy_formula_value": 23.799999999999955,
+            "rmse_pf": 0.2585730070985759,
+            "rmse_formula_value": 25.85730070985759,
+            "accuracy_points": 7,
+            "rmse_points": 4,
+            "total_points": 11
+          },
+          {
+            "session": 2,
+            "nominal_pf": 5,
+            "readings_pf": [
+              4.43,
+              4.37,
+              4.48,
+              4.47,
+              4.37
+            ],
+            "valid": true,
+            "mean_pf": 4.424,
+            "accuracy_formula_value": 57.599999999999966,
+            "rmse_pf": 0.5779273310719956,
+            "rmse_formula_value": 57.79273310719956,
+            "accuracy_points": 0,
+            "rmse_points": 0,
+            "total_points": 0
+          },
+          {
+            "session": 2,
+            "nominal_pf": 10,
+            "readings_pf": [
+              9.69,
+              9.73,
+              9.5,
+              9.63,
+              9.69
+            ],
+            "valid": true,
+            "mean_pf": 9.648,
+            "accuracy_formula_value": 35.20000000000003,
+            "rmse_pf": 0.3611094017053557,
+            "rmse_formula_value": 36.11094017053557,
+            "accuracy_points": 4,
+            "rmse_points": 2,
+            "total_points": 6
+          },
+          {
+            "session": 2,
+            "nominal_pf": 15,
+            "readings_pf": [
+              15.05,
+              15.24,
+              15.11,
+              15.03,
+              15.24
+            ],
+            "valid": true,
+            "mean_pf": 15.134,
+            "accuracy_formula_value": 13.400000000000034,
+            "rmse_pf": 0.1616786937107052,
+            "rmse_formula_value": 16.16786937107052,
+            "accuracy_points": 9,
+            "rmse_points": 6,
+            "total_points": 15
+          },
+          {
+            "session": 2,
+            "nominal_pf": 20,
+            "readings_pf": [
+              20.07,
+              19.62,
+              19.95,
+              19.74,
+              19.91
+            ],
+            "valid": true,
+            "mean_pf": 19.857999999999997,
+            "accuracy_formula_value": 14.200000000000301,
+            "rmse_pf": 0.2133072900770155,
+            "rmse_formula_value": 21.33072900770155,
+            "accuracy_points": 9,
+            "rmse_points": 5,
+            "total_points": 14
+          }
+        ]
+      },
+      "leave_capacitor_out": {
+        "rmse_pf": 0.43335040190099244,
+        "organizer_rmse_value": 43.33504019009924,
+        "five_press_scores": [
+          {
+            "session": 1,
+            "nominal_pf": 5,
+            "readings_pf": [
+              4.87,
+              4.95,
+              4.87,
+              4.85,
+              4.89
+            ],
+            "valid": true,
+            "mean_pf": 4.886,
+            "accuracy_formula_value": 11.399999999999988,
+            "rmse_pf": 0.11907980517283366,
+            "rmse_formula_value": 11.907980517283367,
+            "accuracy_points": 9,
+            "rmse_points": 7,
+            "total_points": 16
+          },
+          {
+            "session": 1,
+            "nominal_pf": 10,
+            "readings_pf": [
+              10.34,
+              10.34,
+              10.16,
+              10.17,
+              10.34
+            ],
+            "valid": true,
+            "mean_pf": 10.27,
+            "accuracy_formula_value": 26.999999999999957,
+            "rmse_pf": 0.28330195904723277,
+            "rmse_formula_value": 28.330195904723276,
+            "accuracy_points": 6,
+            "rmse_points": 4,
+            "total_points": 10
+          },
+          {
+            "session": 1,
+            "nominal_pf": 15,
+            "readings_pf": [
+              15.57,
+              15.42,
+              15.21,
+              15.44,
+              15.44
+            ],
+            "valid": true,
+            "mean_pf": 15.416,
+            "accuracy_formula_value": 41.60000000000004,
+            "rmse_pf": 0.43187961285524923,
+            "rmse_formula_value": 43.18796128552492,
+            "accuracy_points": 3,
+            "rmse_points": 1,
+            "total_points": 4
+          },
+          {
+            "session": 1,
+            "nominal_pf": 20,
+            "readings_pf": [
+              19.44,
+              19.24,
+              19.51,
+              19.35,
+              19.29
+            ],
+            "valid": true,
+            "mean_pf": 19.366,
+            "accuracy_formula_value": 63.400000000000034,
+            "rmse_pf": 0.6415450101123067,
+            "rmse_formula_value": 64.15450101123066,
+            "accuracy_points": 0,
+            "rmse_points": 0,
+            "total_points": 0
+          },
+          {
+            "session": 2,
+            "nominal_pf": 5,
+            "readings_pf": [
+              4.45,
+              4.39,
+              4.51,
+              4.49,
+              4.39
+            ],
+            "valid": true,
+            "mean_pf": 4.446,
+            "accuracy_formula_value": 55.40000000000003,
+            "rmse_pf": 0.5562193811797644,
+            "rmse_formula_value": 55.62193811797644,
+            "accuracy_points": 0,
+            "rmse_points": 0,
+            "total_points": 0
+          },
+          {
+            "session": 2,
+            "nominal_pf": 10,
+            "readings_pf": [
+              9.87,
+              9.91,
+              9.69,
+              9.82,
+              9.87
+            ],
+            "valid": true,
+            "mean_pf": 9.831999999999999,
+            "accuracy_formula_value": 16.800000000000104,
+            "rmse_pf": 0.18460769214742956,
+            "rmse_formula_value": 18.460769214742957,
+            "accuracy_points": 8,
+            "rmse_points": 6,
+            "total_points": 14
+          },
+          {
+            "session": 2,
+            "nominal_pf": 15,
+            "readings_pf": [
+              15.23,
+              15.42,
+              15.29,
+              15.21,
+              15.42
+            ],
+            "valid": true,
+            "mean_pf": 15.313999999999998,
+            "accuracy_formula_value": 31.399999999999828,
+            "rmse_pf": 0.32677209183160055,
+            "rmse_formula_value": 32.67720918316005,
+            "accuracy_points": 5,
+            "rmse_points": 3,
+            "total_points": 8
+          },
+          {
+            "session": 2,
+            "nominal_pf": 20,
+            "readings_pf": [
+              19.62,
+              19.2,
+              19.51,
+              19.31,
+              19.47
+            ],
+            "valid": true,
+            "mean_pf": 19.422,
+            "accuracy_formula_value": 57.79999999999994,
+            "rmse_pf": 0.5969087032369359,
+            "rmse_formula_value": 59.69087032369359,
+            "accuracy_points": 0,
+            "rmse_points": 0,
+            "total_points": 0
+          }
+        ]
+      }
+    },
+    "degree_1_relative": {
+      "leave_session_out": {
+        "rmse_pf": 0.3605171060245823,
+        "organizer_rmse_value": 36.05171060245823,
+        "five_press_scores": [
+          {
+            "session": 1,
+            "nominal_pf": 5,
+            "readings_pf": [
+              5.4,
+              5.48,
+              5.4,
+              5.38,
+              5.42
+            ],
+            "valid": true,
+            "mean_pf": 5.416,
+            "accuracy_formula_value": 41.60000000000004,
+            "rmse_pf": 0.41742065114222626,
+            "rmse_formula_value": 41.742065114222626,
+            "accuracy_points": 3,
+            "rmse_points": 1,
+            "total_points": 4
+          },
+          {
+            "session": 1,
+            "nominal_pf": 10,
+            "readings_pf": [
+              10.48,
+              10.48,
+              10.3,
+              10.32,
+              10.48
+            ],
+            "valid": true,
+            "mean_pf": 10.412,
+            "accuracy_formula_value": 41.20000000000008,
+            "rmse_pf": 0.4203807797699609,
+            "rmse_formula_value": 42.03807797699609,
+            "accuracy_points": 3,
+            "rmse_points": 1,
+            "total_points": 4
+          },
+          {
+            "session": 1,
+            "nominal_pf": 15,
+            "readings_pf": [
+              15.47,
+              15.33,
+              15.13,
+              15.35,
+              15.35
+            ],
+            "valid": true,
+            "mean_pf": 15.325999999999999,
+            "accuracy_formula_value": 32.59999999999987,
+            "rmse_pf": 0.3440058139043584,
+            "rmse_formula_value": 34.40058139043584,
+            "accuracy_points": 5,
+            "rmse_points": 3,
+            "total_points": 8
+          },
+          {
+            "session": 1,
+            "nominal_pf": 20,
+            "readings_pf": [
+              19.75,
+              19.55,
+              19.82,
+              19.66,
+              19.6
+            ],
+            "valid": true,
+            "mean_pf": 19.676,
+            "accuracy_formula_value": 32.40000000000016,
+            "rmse_pf": 0.33852621759621454,
+            "rmse_formula_value": 33.85262175962146,
+            "accuracy_points": 5,
+            "rmse_points": 3,
+            "total_points": 8
+          },
+          {
+            "session": 2,
+            "nominal_pf": 5,
+            "readings_pf": [
+              4.55,
+              4.49,
+              4.6,
+              4.58,
+              4.49
+            ],
+            "valid": true,
+            "mean_pf": 4.542,
+            "accuracy_formula_value": 45.80000000000002,
+            "rmse_pf": 0.4602390683112419,
+            "rmse_formula_value": 46.02390683112419,
+            "accuracy_points": 2,
+            "rmse_points": 0,
+            "total_points": 2
+          },
+          {
+            "session": 2,
+            "nominal_pf": 10,
+            "readings_pf": [
+              9.71,
+              9.75,
+              9.53,
+              9.66,
+              9.71
+            ],
+            "valid": true,
+            "mean_pf": 9.672,
+            "accuracy_formula_value": 32.79999999999994,
+            "rmse_pf": 0.336808550960334,
+            "rmse_formula_value": 33.680855096033405,
+            "accuracy_points": 5,
+            "rmse_points": 3,
+            "total_points": 8
+          },
+          {
+            "session": 2,
+            "nominal_pf": 15,
+            "readings_pf": [
+              14.98,
+              15.17,
+              15.03,
+              14.96,
+              15.17
+            ],
+            "valid": true,
+            "mean_pf": 15.062000000000001,
+            "accuracy_formula_value": 6.2000000000001165,
+            "rmse_pf": 0.1101816681667144,
+            "rmse_formula_value": 11.01816681667144,
+            "accuracy_points": 10,
+            "rmse_points": 7,
+            "total_points": 17
+          },
+          {
+            "session": 2,
+            "nominal_pf": 20,
+            "readings_pf": [
+              19.9,
+              19.47,
+              19.79,
+              19.58,
+              19.75
+            ],
+            "valid": true,
+            "mean_pf": 19.698,
+            "accuracy_formula_value": 30.19999999999996,
+            "rmse_pf": 0.3387919715695764,
+            "rmse_formula_value": 33.879197156957645,
+            "accuracy_points": 5,
+            "rmse_points": 3,
+            "total_points": 8
+          }
+        ]
+      },
+      "leave_capacitor_out": {
+        "rmse_pf": 0.3977471631121425,
+        "organizer_rmse_value": 39.77471631121425,
+        "five_press_scores": [
+          {
+            "session": 1,
+            "nominal_pf": 5,
+            "readings_pf": [
+              5.01,
+              5.09,
+              5.01,
+              4.99,
+              5.03
+            ],
+            "valid": true,
+            "mean_pf": 5.026,
+            "accuracy_formula_value": 2.59999999999998,
+            "rmse_pf": 0.0431277173056956,
+            "rmse_formula_value": 4.31277173056956,
+            "accuracy_points": 10,
+            "rmse_points": 9,
+            "total_points": 19
+          },
+          {
+            "session": 1,
+            "nominal_pf": 10,
+            "readings_pf": [
+              10.35,
+              10.35,
+              10.16,
+              10.18,
+              10.35
+            ],
+            "valid": true,
+            "mean_pf": 10.278,
+            "accuracy_formula_value": 27.800000000000047,
+            "rmse_pf": 0.2917190429162962,
+            "rmse_formula_value": 29.17190429162962,
+            "accuracy_points": 6,
+            "rmse_points": 4,
+            "total_points": 10
+          },
+          {
+            "session": 1,
+            "nominal_pf": 15,
+            "readings_pf": [
+              15.48,
+              15.33,
+              15.13,
+              15.35,
+              15.35
+            ],
+            "valid": true,
+            "mean_pf": 15.328,
+            "accuracy_formula_value": 32.79999999999994,
+            "rmse_pf": 0.3467563986431974,
+            "rmse_formula_value": 34.67563986431974,
+            "accuracy_points": 5,
+            "rmse_points": 3,
+            "total_points": 8
+          },
+          {
+            "session": 1,
+            "nominal_pf": 20,
+            "readings_pf": [
+              19.43,
+              19.23,
+              19.5,
+              19.33,
+              19.28
+            ],
+            "valid": true,
+            "mean_pf": 19.354,
+            "accuracy_formula_value": 64.60000000000008,
+            "rmse_pf": 0.6534676732631846,
+            "rmse_formula_value": 65.34676732631846,
+            "accuracy_points": 0,
+            "rmse_points": 0,
+            "total_points": 0
+          },
+          {
+            "session": 2,
+            "nominal_pf": 5,
+            "readings_pf": [
+              4.59,
+              4.54,
+              4.65,
+              4.63,
+              4.54
+            ],
+            "valid": true,
+            "mean_pf": 4.59,
+            "accuracy_formula_value": 41.000000000000014,
+            "rmse_pf": 0.4124803025600131,
+            "rmse_formula_value": 41.248030256001314,
+            "accuracy_points": 3,
+            "rmse_points": 1,
+            "total_points": 4
+          },
+          {
+            "session": 2,
+            "nominal_pf": 10,
+            "readings_pf": [
+              9.88,
+              9.92,
+              9.7,
+              9.83,
+              9.88
+            ],
+            "valid": true,
+            "mean_pf": 9.842,
+            "accuracy_formula_value": 15.799999999999947,
+            "rmse_pf": 0.17555625878902753,
+            "rmse_formula_value": 17.555625878902752,
+            "accuracy_points": 8,
+            "rmse_points": 6,
+            "total_points": 14
+          },
+          {
+            "session": 2,
+            "nominal_pf": 15,
+            "readings_pf": [
+              15.14,
+              15.33,
+              15.2,
+              15.13,
+              15.33
+            ],
+            "valid": true,
+            "mean_pf": 15.225999999999999,
+            "accuracy_formula_value": 22.59999999999991,
+            "rmse_pf": 0.24261079942986882,
+            "rmse_formula_value": 24.261079942986882,
+            "accuracy_points": 7,
+            "rmse_points": 5,
+            "total_points": 12
+          },
+          {
+            "session": 2,
+            "nominal_pf": 20,
+            "readings_pf": [
+              19.61,
+              19.19,
+              19.5,
+              19.3,
+              19.46
+            ],
+            "valid": true,
+            "mean_pf": 19.412,
+            "accuracy_formula_value": 58.8000000000001,
+            "rmse_pf": 0.6065970656045075,
+            "rmse_formula_value": 60.65970656045076,
+            "accuracy_points": 0,
+            "rmse_points": 0,
+            "total_points": 0
+          }
+        ]
+      }
+    },
+    "degree_2_absolute": {
+      "leave_session_out": {
+        "rmse_pf": 0.32501996279762424,
+        "organizer_rmse_value": 32.50199627976242,
+        "five_press_scores": [
+          {
+            "session": 1,
+            "nominal_pf": 5,
+            "readings_pf": [
+              5.43,
+              5.5,
+              5.43,
+              5.42,
+              5.45
+            ],
+            "valid": true,
+            "mean_pf": 5.446,
+            "accuracy_formula_value": 44.59999999999997,
+            "rmse_pf": 0.44692281212755286,
+            "rmse_formula_value": 44.69228121275528,
+            "accuracy_points": 3,
+            "rmse_points": 1,
+            "total_points": 4
+          },
+          {
+            "session": 1,
+            "nominal_pf": 10,
+            "readings_pf": [
+              10.35,
+              10.35,
+              10.17,
+              10.19,
+              10.35
+            ],
+            "valid": true,
+            "mean_pf": 10.282,
+            "accuracy_formula_value": 28.200000000000003,
+            "rmse_pf": 0.2941088233970545,
+            "rmse_formula_value": 29.410882339705452,
+            "accuracy_points": 6,
+            "rmse_points": 4,
+            "total_points": 10
+          },
+          {
+            "session": 1,
+            "nominal_pf": 15,
+            "readings_pf": [
+              15.42,
+              15.27,
+              15.06,
+              15.29,
+              15.29
+            ],
+            "valid": true,
+            "mean_pf": 15.266,
+            "accuracy_formula_value": 26.6,
+            "rmse_pf": 0.29020682280056714,
+            "rmse_formula_value": 29.020682280056715,
+            "accuracy_points": 6,
+            "rmse_points": 4,
+            "total_points": 10
+          },
+          {
+            "session": 1,
+            "nominal_pf": 20,
+            "readings_pf": [
+              19.95,
+              19.73,
+              20.03,
+              19.85,
+              19.79
+            ],
+            "valid": true,
+            "mean_pf": 19.869999999999997,
+            "accuracy_formula_value": 13.000000000000256,
+            "rmse_pf": 0.1690562036720332,
+            "rmse_formula_value": 16.90562036720332,
+            "accuracy_points": 9,
+            "rmse_points": 6,
+            "total_points": 15
+          },
+          {
+            "session": 2,
+            "nominal_pf": 5,
+            "readings_pf": [
+              4.63,
+              4.58,
+              4.68,
+              4.67,
+              4.58
+            ],
+            "valid": true,
+            "mean_pf": 4.628,
+            "accuracy_formula_value": 37.19999999999999,
+            "rmse_pf": 0.37443290453698114,
+            "rmse_formula_value": 37.44329045369811,
+            "accuracy_points": 4,
+            "rmse_points": 2,
+            "total_points": 6
+          },
+          {
+            "session": 2,
+            "nominal_pf": 10,
+            "readings_pf": [
+              9.53,
+              9.56,
+              9.34,
+              9.47,
+              9.53
+            ],
+            "valid": true,
+            "mean_pf": 9.486,
+            "accuracy_formula_value": 51.399999999999935,
+            "rmse_pf": 0.5199807688751577,
+            "rmse_formula_value": 51.998076887515765,
+            "accuracy_points": 1,
+            "rmse_points": 0,
+            "total_points": 1
+          },
+          {
+            "session": 2,
+            "nominal_pf": 15,
+            "readings_pf": [
+              14.89,
+              15.09,
+              14.95,
+              14.87,
+              15.09
+            ],
+            "valid": true,
+            "mean_pf": 14.978,
+            "accuracy_formula_value": 2.200000000000024,
+            "rmse_pf": 0.09767292357659833,
+            "rmse_formula_value": 9.767292357659834,
+            "accuracy_points": 10,
+            "rmse_points": 8,
+            "total_points": 18
+          },
+          {
+            "session": 2,
+            "nominal_pf": 20,
+            "readings_pf": [
+              20.26,
+              19.77,
+              20.13,
+              19.9,
+              20.09
+            ],
+            "valid": true,
+            "mean_pf": 20.03,
+            "accuracy_formula_value": 3.0000000000001137,
+            "rmse_pf": 0.17635192088548454,
+            "rmse_formula_value": 17.635192088548454,
+            "accuracy_points": 10,
+            "rmse_points": 6,
+            "total_points": 16
+          }
+        ]
+      },
+      "leave_capacitor_out": {
+        "rmse_pf": 0.6144458217684846,
+        "organizer_rmse_value": 61.44458217684846,
+        "five_press_scores": [
+          {
+            "session": 1,
+            "nominal_pf": 5,
+            "readings_pf": [
+              6.05,
+              6.11,
+              6.05,
+              6.04,
+              6.07
+            ],
+            "valid": true,
+            "mean_pf": 6.064,
+            "accuracy_formula_value": 106.4,
+            "rmse_pf": 1.064293192687053,
+            "rmse_formula_value": 106.42931926870529,
+            "accuracy_points": 0,
+            "rmse_points": 0,
+            "total_points": 0
+          },
+          {
+            "session": 1,
+            "nominal_pf": 10,
+            "readings_pf": [
+              10.0,
+              10.0,
+              9.82,
+              9.84,
+              10.0
+            ],
+            "valid": true,
+            "mean_pf": 9.931999999999999,
+            "accuracy_formula_value": 6.800000000000139,
+            "rmse_pf": 0.10770329614269003,
+            "rmse_formula_value": 10.770329614269002,
+            "accuracy_points": 10,
+            "rmse_points": 7,
+            "total_points": 17
+          },
+          {
+            "session": 1,
+            "nominal_pf": 15,
+            "readings_pf": [
+              15.45,
+              15.3,
+              15.08,
+              15.32,
+              15.32
+            ],
+            "valid": true,
+            "mean_pf": 15.294,
+            "accuracy_formula_value": 29.40000000000005,
+            "rmse_pf": 0.31739565214413384,
+            "rmse_formula_value": 31.739565214413386,
+            "accuracy_points": 6,
+            "rmse_points": 3,
+            "total_points": 9
+          },
+          {
+            "session": 1,
+            "nominal_pf": 20,
+            "readings_pf": [
+              19.38,
+              19.18,
+              19.45,
+              19.29,
+              19.24
+            ],
+            "valid": true,
+            "mean_pf": 19.308,
+            "accuracy_formula_value": 69.20000000000002,
+            "rmse_pf": 0.6987131027825377,
+            "rmse_formula_value": 69.87131027825377,
+            "accuracy_points": 0,
+            "rmse_points": 0,
+            "total_points": 0
+          },
+          {
+            "session": 2,
+            "nominal_pf": 5,
+            "readings_pf": [
+              5.76,
+              5.71,
+              5.8,
+              5.78,
+              5.71
+            ],
+            "valid": true,
+            "mean_pf": 5.752,
+            "accuracy_formula_value": 75.19999999999997,
+            "rmse_pf": 0.7528877738414935,
+            "rmse_formula_value": 75.28877738414936,
+            "accuracy_points": 0,
+            "rmse_points": 0,
+            "total_points": 0
+          },
+          {
+            "session": 2,
+            "nominal_pf": 10,
+            "readings_pf": [
+              9.55,
+              9.58,
+              9.37,
+              9.49,
+              9.55
+            ],
+            "valid": true,
+            "mean_pf": 9.508,
+            "accuracy_formula_value": 49.20000000000009,
+            "rmse_pf": 0.4976745924798652,
+            "rmse_formula_value": 49.767459247986515,
+            "accuracy_points": 2,
+            "rmse_points": 0,
+            "total_points": 2
+          },
+          {
+            "session": 2,
+            "nominal_pf": 15,
+            "readings_pf": [
+              15.1,
+              15.3,
+              15.16,
+              15.08,
+              15.3
+            ],
+            "valid": true,
+            "mean_pf": 15.187999999999999,
+            "accuracy_formula_value": 18.799999999999883,
+            "rmse_pf": 0.21071307505705517,
+            "rmse_formula_value": 21.071307505705516,
+            "accuracy_points": 8,
+            "rmse_points": 5,
+            "total_points": 13
+          },
+          {
+            "session": 2,
+            "nominal_pf": 20,
+            "readings_pf": [
+              19.56,
+              19.15,
+              19.45,
+              19.25,
+              19.42
+            ],
+            "valid": true,
+            "mean_pf": 19.366,
+            "accuracy_formula_value": 63.400000000000034,
+            "rmse_pf": 0.6507687761409582,
+            "rmse_formula_value": 65.07687761409582,
+            "accuracy_points": 0,
+            "rmse_points": 0,
+            "total_points": 0
+          }
+        ]
+      }
+    },
+    "degree_2_relative": {
+      "leave_session_out": {
+        "rmse_pf": 0.33437402002793054,
+        "organizer_rmse_value": 33.43740200279306,
+        "five_press_scores": [
+          {
+            "session": 1,
+            "nominal_pf": 5,
+            "readings_pf": [
+              5.4,
+              5.47,
+              5.4,
+              5.39,
+              5.42
+            ],
+            "valid": true,
+            "mean_pf": 5.4159999999999995,
+            "accuracy_formula_value": 41.59999999999995,
+            "rmse_pf": 0.41698920849345733,
+            "rmse_formula_value": 41.69892084934573,
+            "accuracy_points": 3,
+            "rmse_points": 1,
+            "total_points": 4
+          },
+          {
+            "session": 1,
+            "nominal_pf": 10,
+            "readings_pf": [
+              10.41,
+              10.41,
+              10.23,
+              10.25,
+              10.41
+            ],
+            "valid": true,
+            "mean_pf": 10.342,
+            "accuracy_formula_value": 34.20000000000005,
+            "rmse_pf": 0.3520511326497901,
+            "rmse_formula_value": 35.20511326497901,
+            "accuracy_points": 5,
+            "rmse_points": 2,
+            "total_points": 7
+          },
+          {
+            "session": 1,
+            "nominal_pf": 15,
+            "readings_pf": [
+              15.46,
+              15.31,
+              15.1,
+              15.32,
+              15.32
+            ],
+            "valid": true,
+            "mean_pf": 15.302000000000001,
+            "accuracy_formula_value": 30.200000000000138,
+            "rmse_pf": 0.3232645975048927,
+            "rmse_formula_value": 32.32645975048927,
+            "accuracy_points": 5,
+            "rmse_points": 3,
+            "total_points": 8
+          },
+          {
+            "session": 1,
+            "nominal_pf": 20,
+            "readings_pf": [
+              19.88,
+              19.67,
+              19.95,
+              19.78,
+              19.72
+            ],
+            "valid": true,
+            "mean_pf": 19.8,
+            "accuracy_formula_value": 19.99999999999993,
+            "rmse_pf": 0.2247665455533805,
+            "rmse_formula_value": 22.47665455533805,
+            "accuracy_points": null,
+            "rmse_points": 5,
+            "total_points": null
+          },
+          {
+            "session": 2,
+            "nominal_pf": 5,
+            "readings_pf": [
+              4.6,
+              4.55,
+              4.66,
+              4.64,
+              4.55
+            ],
+            "valid": true,
+            "mean_pf": 4.6,
+            "accuracy_formula_value": 40.000000000000036,
+            "rmse_pf": 0.4025419232825323,
+            "rmse_formula_value": 40.25419232825323,
+            "accuracy_points": null,
+            "rmse_points": 1,
+            "total_points": null
+          },
+          {
+            "session": 2,
+            "nominal_pf": 10,
+            "readings_pf": [
+              9.56,
+              9.6,
+              9.37,
+              9.5,
+              9.56
+            ],
+            "valid": true,
+            "mean_pf": 9.518,
+            "accuracy_formula_value": 48.19999999999993,
+            "rmse_pf": 0.4886921321241013,
+            "rmse_formula_value": 48.86921321241013,
+            "accuracy_points": 2,
+            "rmse_points": 0,
+            "total_points": 2
+          },
+          {
+            "session": 2,
+            "nominal_pf": 15,
+            "readings_pf": [
+              14.92,
+              15.11,
+              14.98,
+              14.9,
+              15.11
+            ],
+            "valid": true,
+            "mean_pf": 15.004,
+            "accuracy_formula_value": 0.39999999999995595,
+            "rmse_pf": 0.09055385138137381,
+            "rmse_formula_value": 9.055385138137382,
+            "accuracy_points": 10,
+            "rmse_points": 8,
+            "total_points": 18
+          },
+          {
+            "session": 2,
+            "nominal_pf": 20,
+            "readings_pf": [
+              20.21,
+              19.74,
+              20.09,
+              19.86,
+              20.05
+            ],
+            "valid": true,
+            "mean_pf": 19.990000000000002,
+            "accuracy_formula_value": 0.999999999999801,
+            "rmse_pf": 0.1684636459299165,
+            "rmse_formula_value": 16.84636459299165,
+            "accuracy_points": 10,
+            "rmse_points": 6,
+            "total_points": 16
+          }
+        ]
+      },
+      "leave_capacitor_out": {
+        "rmse_pf": 0.6262451741993041,
+        "organizer_rmse_value": 62.62451741993041,
+        "five_press_scores": [
+          {
+            "session": 1,
+            "nominal_pf": 5,
+            "readings_pf": [
+              6.16,
+              6.21,
+              6.16,
+              6.15,
+              6.17
+            ],
+            "valid": true,
+            "mean_pf": 6.17,
+            "accuracy_formula_value": 117.0,
+            "rmse_pf": 1.1701880190806946,
+            "rmse_formula_value": 117.01880190806946,
+            "accuracy_points": 0,
+            "rmse_points": 0,
+            "total_points": 0
+          },
+          {
+            "session": 1,
+            "nominal_pf": 10,
+            "readings_pf": [
+              9.85,
+              9.85,
+              9.67,
+              9.69,
+              9.85
+            ],
+            "valid": true,
+            "mean_pf": 9.782,
+            "accuracy_formula_value": 21.799999999999997,
+            "rmse_pf": 0.23345235059857533,
+            "rmse_formula_value": 23.345235059857533,
+            "accuracy_points": 7,
+            "rmse_points": 5,
+            "total_points": 12
+          },
+          {
+            "session": 1,
+            "nominal_pf": 15,
+            "readings_pf": [
+              15.42,
+              15.26,
+              15.05,
+              15.28,
+              15.28
+            ],
+            "valid": true,
+            "mean_pf": 15.258,
+            "accuracy_formula_value": 25.799999999999912,
+            "rmse_pf": 0.28400704216621075,
+            "rmse_formula_value": 28.400704216621076,
+            "accuracy_points": 6,
+            "rmse_points": 4,
+            "total_points": 10
+          },
+          {
+            "session": 1,
+            "nominal_pf": 20,
+            "readings_pf": [
+              19.6,
+              19.39,
+              19.67,
+              19.5,
+              19.45
+            ],
+            "valid": true,
+            "mean_pf": 19.522,
+            "accuracy_formula_value": 47.80000000000015,
+            "rmse_pf": 0.48856934001224384,
+            "rmse_formula_value": 48.85693400122438,
+            "accuracy_points": 2,
+            "rmse_points": 0,
+            "total_points": 2
+          },
+          {
+            "session": 2,
+            "nominal_pf": 5,
+            "readings_pf": [
+              5.87,
+              5.83,
+              5.91,
+              5.9,
+              5.83
+            ],
+            "valid": true,
+            "mean_pf": 5.868,
+            "accuracy_formula_value": 86.80000000000004,
+            "rmse_pf": 0.8686541314009854,
+            "rmse_formula_value": 86.86541314009854,
+            "accuracy_points": 0,
+            "rmse_points": 0,
+            "total_points": 0
+          },
+          {
+            "session": 2,
+            "nominal_pf": 10,
+            "readings_pf": [
+              9.4,
+              9.44,
+              9.23,
+              9.35,
+              9.4
+            ],
+            "valid": true,
+            "mean_pf": 9.364,
+            "accuracy_formula_value": 63.59999999999992,
+            "rmse_pf": 0.6401562309311688,
+            "rmse_formula_value": 64.01562309311689,
+            "accuracy_points": 0,
+            "rmse_points": 0,
+            "total_points": 0
+          },
+          {
+            "session": 2,
+            "nominal_pf": 15,
+            "readings_pf": [
+              15.07,
+              15.26,
+              15.13,
+              15.05,
+              15.26
+            ],
+            "valid": true,
+            "mean_pf": 15.154,
+            "accuracy_formula_value": 15.399999999999991,
+            "rmse_pf": 0.17860571099491757,
+            "rmse_formula_value": 17.860571099491757,
+            "accuracy_points": 8,
+            "rmse_points": 6,
+            "total_points": 14
+          },
+          {
+            "session": 2,
+            "nominal_pf": 20,
+            "readings_pf": [
+              19.79,
+              19.35,
+              19.67,
+              19.47,
+              19.64
+            ],
+            "valid": true,
+            "mean_pf": 19.584,
+            "accuracy_formula_value": 41.60000000000004,
+            "rmse_pf": 0.44407206622348994,
+            "rmse_formula_value": 44.407206622348994,
+            "accuracy_points": 3,
+            "rmse_points": 1,
+            "total_points": 4
+          }
+        ]
+      }
+    }
+  },
+  "scoring_formula": "accuracy=abs(mean-reference)*100; rmse=sqrt(mean(error^2))*100; pF inputs",
+  "training_five_press_scores": [
+    {
+      "session": 1,
+      "nominal_pf": 5,
+      "readings_pf": [
+        5.11,
+        5.18,
+        5.11,
+        5.09,
+        5.13
+      ],
+      "valid": true,
+      "mean_pf": 5.1240000000000006,
+      "accuracy_formula_value": 12.400000000000055,
+      "rmse_pf": 0.12774975538137048,
+      "rmse_formula_value": 12.77497553813705,
+      "accuracy_points": 9,
+      "rmse_points": 7,
+      "total_points": 16
+    },
+    {
+      "session": 1,
+      "nominal_pf": 10,
+      "readings_pf": [
+        10.33,
+        10.33,
+        10.14,
+        10.16,
+        10.33
+      ],
+      "valid": true,
+      "mean_pf": 10.258,
+      "accuracy_formula_value": 25.799999999999912,
+      "rmse_pf": 0.2727269696968015,
+      "rmse_formula_value": 27.272696969680148,
+      "accuracy_points": 6,
+      "rmse_points": 4,
+      "total_points": 10
+    },
+    {
+      "session": 1,
+      "nominal_pf": 15,
+      "readings_pf": [
+        15.46,
+        15.31,
+        15.1,
+        15.32,
+        15.32
+      ],
+      "valid": true,
+      "mean_pf": 15.302000000000001,
+      "accuracy_formula_value": 30.200000000000138,
+      "rmse_pf": 0.3232645975048927,
+      "rmse_formula_value": 32.32645975048927,
+      "accuracy_points": 5,
+      "rmse_points": 3,
+      "total_points": 8
+    },
+    {
+      "session": 1,
+      "nominal_pf": 20,
+      "readings_pf": [
+        19.85,
+        19.64,
+        19.92,
+        19.75,
+        19.7
+      ],
+      "valid": true,
+      "mean_pf": 19.772,
+      "accuracy_formula_value": 22.800000000000153,
+      "rmse_pf": 0.24939927826679825,
+      "rmse_formula_value": 24.939927826679824,
+      "accuracy_points": 7,
+      "rmse_points": 5,
+      "total_points": 12
+    },
+    {
+      "session": 2,
+      "nominal_pf": 5,
+      "readings_pf": [
+        4.69,
+        4.64,
+        4.75,
+        4.73,
+        4.64
+      ],
+      "valid": true,
+      "mean_pf": 4.6899999999999995,
+      "accuracy_formula_value": 31.00000000000005,
+      "rmse_pf": 0.3132730438451416,
+      "rmse_formula_value": 31.32730438451416,
+      "accuracy_points": 5,
+      "rmse_points": 3,
+      "total_points": 8
+    },
+    {
+      "session": 2,
+      "nominal_pf": 10,
+      "readings_pf": [
+        9.86,
+        9.9,
+        9.67,
+        9.8,
+        9.86
+      ],
+      "valid": true,
+      "mean_pf": 9.818000000000001,
+      "accuracy_formula_value": 18.19999999999986,
+      "rmse_pf": 0.199047732968753,
+      "rmse_formula_value": 19.904773296875298,
+      "accuracy_points": 8,
+      "rmse_points": 6,
+      "total_points": 14
+    },
+    {
+      "session": 2,
+      "nominal_pf": 15,
+      "readings_pf": [
+        15.12,
+        15.31,
+        15.17,
+        15.1,
+        15.31
+      ],
+      "valid": true,
+      "mean_pf": 15.202000000000002,
+      "accuracy_formula_value": 20.200000000000173,
+      "rmse_pf": 0.22158519806160354,
+      "rmse_formula_value": 22.158519806160353,
+      "accuracy_points": 7,
+      "rmse_points": 5,
+      "total_points": 12
+    },
+    {
+      "session": 2,
+      "nominal_pf": 20,
+      "readings_pf": [
+        20.04,
+        19.6,
+        19.92,
+        19.72,
+        19.89
+      ],
+      "valid": true,
+      "mean_pf": 19.834,
+      "accuracy_formula_value": 16.600000000000037,
+      "rmse_pf": 0.22737634001804102,
+      "rmse_formula_value": 22.737634001804103,
+      "accuracy_points": 8,
+      "rmse_points": 5,
+      "total_points": 13
+    }
+  ],
+  "calibration": {
+    "slope": 3.01573790162095,
+    "intercept": -17.653452274150098,
+    "nominal_range_pf": [
+      5,
+      20
+    ],
+    "cpu_mhz": 240
+  },
+  "retrospective_old": {
+    "rmse_pf": 0.2951383640757847,
+    "organizer_rmse_value": 29.51383640757847
+  },
+  "training_new": {
+    "rmse_pf": 0.24869900119907587,
+    "organizer_rmse_value": 24.869900119907587
+  },
+  "summary": [
+    {
+      "nominal_pf": 5,
+      "old_mean_pf": 4.6441044953868715,
+      "new_mean_pf": 4.90740862362213,
+      "new_round2_mean_pf": 4.690652461943125
+    },
+    {
+      "nominal_pf": 10,
+      "old_mean_pf": 9.873615049636658,
+      "new_mean_pf": 10.037932728754772,
+      "new_round2_mean_pf": 9.81740689469874
+    },
+    {
+      "nominal_pf": 15,
+      "old_mean_pf": 15.187658471038167,
+      "new_mean_pf": 15.251389626181986,
+      "new_round2_mean_pf": 15.200499049092134
+    },
+    {
+      "nominal_pf": 20,
+      "old_mean_pf": 19.827360156752075,
+      "new_mean_pf": 19.80326902144111,
+      "new_round2_mean_pf": 19.83342640045732
+    }
+  ],
+  "limitations": [
+    "Model selection used both sessions; grouped scores are exploratory, not a final independent test.",
+    "Final coefficients fitted on both sessions; their replay error is training error.",
+    "Only four physical capacitors with nominal +/-5% tolerance; absolute accuracy is unknown.",
+    "Endpoint leave-capacitor-out folds are extrapolation.",
+    "Data came from bench firmware, not competition firmware; fresh hardware validation required.",
+    "No reference-voltage correction inferred from these data; keep the original circuit and reference.",
+    "Failed initial_low file excluded; only the eight previously verified source files used."
+  ]
+}

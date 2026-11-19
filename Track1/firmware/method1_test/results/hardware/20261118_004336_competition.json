@@ -1,0 +1,60 @@
+{
+  "port": "COM3",
+  "nominal_reference_pf": 20.0,
+  "trigger": "Serial m in diagnostic mode, not physical button",
+  "readings_pf": [
+    20.79,
+    20.98,
+    20.81,
+    20.92,
+    20.69
+  ],
+  "diagnostics": [
+    "DIAG reference_mv=892 valid=64/64 median_us=12.858333",
+    "DIAG reference_mv=900 valid=64/64 median_us=12.920833",
+    "DIAG reference_mv=907 valid=64/64 median_us=12.864583",
+    "DIAG reference_mv=903 valid=64/64 median_us=12.902083",
+    "DIAG reference_mv=898 valid=64/64 median_us=12.827083"
+  ],
+  "raw_lines": [
+    "DIAG enabled: m=measure, q=contest mode",
+    "TGR-55",
+    "Capacitance = 20.79 pF",
+    "DIAG reference_mv=892 valid=64/64 median_us=12.858333",
+    "TGR-55",
+    "Capacitance = 20.98 pF",
+    "DIAG reference_mv=900 valid=64/64 median_us=12.920833",
+    "TGR-55",
+    "Capacitance = 20.81 pF",
+    "DIAG reference_mv=907 valid=64/64 median_us=12.864583",
+    "TGR-55",
+    "Capacitance = 20.92 pF",
+    "DIAG reference_mv=903 valid=64/64 median_us=12.902083",
+    "TGR-55",
+    "Capacitance = 20.69 pF",
+    "DIAG reference_mv=898 valid=64/64 median_us=12.827083"
+  ],
+  "sources": {
+    "method1_competition.ino": "2648ca2728406408f25432fdd19a8e75095b1105fdca246819085673c06acfe4",
+    "calibration_model.h": "e2ad14a3b34e716da0ba79415467b68cbabc9497cbf2a1cf736220666c97ed95"
+  },
+  "score_vs_nominal": {
+    "valid": true,
+    "mean_pf": 20.838,
+    "accuracy_formula_value": 83.8000000000001,
+    "rmse_pf": 0.8441682296793693,
+    "rmse_formula_value": 84.41682296793694,
+    "accuracy_points": 0,
+    "rmse_points": 0,
+    "total_points": 0
+  },
+  "contest_mode_ignores_m": true,
+  "sample_description": "User-confirmed parallel assembly: nominal 5 pF + 15 pF",
+  "use_for_calibration": false,
+  "purpose": "Diagnostic comparison with single nominal 20 pF; actual capacitance and wiring parasitics unknown.",
+  "comparison": {
+    "single_20pf_mean_pf": 19.894,
+    "parallel_minus_single_pf": 0.944,
+    "note": "Different physical capacitors and assembly; difference does not isolate meter error."
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "port": "COM3",
+  "nominal_reference_pf": 10,
+  "trigger": "Serial m in diagnostic mode, not physical button",
+  "readings_pf": [
+    8.19,
+    8.19,
+    8.19,
+    8.17,
+    8.22
+  ],
+  "diagnostics": [
+    "DIAG reference_mv=902 valid=64/64 median_us=8.633333",
+    "DIAG reference_mv=897 valid=64/64 median_us=8.633333",
+    "DIAG reference_mv=900 valid=64/64 median_us=8.633333",
+    "DIAG reference_mv=895 valid=64/64 median_us=8.627083",
+    "DIAG reference_mv=905 valid=64/64 median_us=8.645833"
+  ],
+  "raw_lines": [
+    "DIAG enabled: m=measure, q=contest mode",
+    "TGR-55",
+    "Capacitance = 8.19 pF",
+    "DIAG reference_mv=902 valid=64/64 median_us=8.633333",
+    "TGR-55",
+    "Capacitance = 8.19 pF",
+    "DIAG reference_mv=897 valid=64/64 median_us=8.633333",
+    "TGR-55",
+    "Capacitance = 8.19 pF",
+    "DIAG reference_mv=900 valid=64/64 median_us=8.633333",
+    "TGR-55",
+    "Capacitance = 8.17 pF",
+    "DIAG reference_mv=895 valid=64/64 median_us=8.627083",
+    "TGR-55",
+    "Capacitance = 8.22 pF",
+    "DIAG reference_mv=905 valid=64/64 median_us=8.645833"
+  ],
+  "sources": {
+    "method1_competition.ino": "5d23ca514aa226639110dc8a896db232c8df07a5c5388d34a78c0241eb66d1a4",
+    "calibration_model.h": "fac89d313c329494e0e9ba1f800412123c43240dd58a221a6f00d1eac1c111ab"
+  },
+  "score_vs_nominal": {
+    "valid": true,
+    "mean_pf": 8.192,
+    "accuracy_formula_value": 180.79999999999998,
+    "rmse_pf": 1.8080707950741313,
+    "rmse_formula_value": 180.80707950741314,
+    "accuracy_points": 0,
+    "rmse_points": 0,
+    "total_points": 0
+  },
+  "contest_mode_ignores_m": true,
+  "breadboard": "original breadboard; user confirmed switched back",
+  "calibration": "original Nov 17 round-1",
+  "sample_description": "Single nominal 10 pF; user corrected the initially assumed 20 pF label after capture",
+  "use_for_calibration": false,
+  "interpretation": "Mean 8.192 pF for user-confirmed nominal 10 pF. Earlier comparison against the 20 pF sample is invalid. Compared with preceding 10 pF attempts, capture now yields positive capacitance instead of the failure sentinel; reason for timing change is not established.",
+  "label_correction": {
+    "previous_nominal_reference_pf": 20,
+    "confirmed_nominal_reference_pf": 10,
+    "reason": "User clarified after capture: this is 10."
+  }
+}

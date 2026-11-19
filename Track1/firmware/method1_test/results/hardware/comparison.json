@@ -1,0 +1,216 @@
+{
+  "sources": [
+    {
+      "file": "20261118_002942_competition.json",
+      "sha256": "071f9238aca6e35faee2322a2a88e8c58273b910e1f973cf51d9de65fbf09695"
+    },
+    {
+      "file": "20261118_003214_competition.json",
+      "sha256": "cb21b77ceeecdf9b0fdc961b33ffc48e545700978b927780075345498bd794b8"
+    },
+    {
+      "file": "20261118_003345_competition.json",
+      "sha256": "ab929b65462698fe7358d0ddea3aa43e0437abb1b496143ecdfdc3c041a67b88"
+    },
+    {
+      "file": "20261118_003506_competition.json",
+      "sha256": "303e093ad1f21cd9b7120a518093f3e6a2544b3e47214b9ffce4a12499a006f7"
+    }
+  ],
+  "firmware_source_hashes": {
+    "method1_competition.ino": "2648ca2728406408f25432fdd19a8e75095b1105fdca246819085673c06acfe4",
+    "calibration_model.h": "e2ad14a3b34e716da0ba79415467b68cbabc9497cbf2a1cf736220666c97ed95"
+  },
+  "actual_tests": [
+    {
+      "nominal_pf": 5.0,
+      "readings_pf": [
+        5.08,
+        4.9,
+        5.07,
+        5.16,
+        4.86
+      ],
+      "valid": true,
+      "mean_pf": 5.014,
+      "accuracy_formula_value": 1.4000000000000234,
+      "rmse_pf": 0.11532562594670791,
+      "rmse_formula_value": 11.532562594670791,
+      "accuracy_points": 10,
+      "rmse_points": 7,
+      "total_points": 17
+    },
+    {
+      "nominal_pf": 10.0,
+      "readings_pf": [
+        10.16,
+        10.17,
+        10.04,
+        10.02,
+        10.14
+      ],
+      "valid": true,
+      "mean_pf": 10.106,
+      "accuracy_formula_value": 10.599999999999987,
+      "rmse_pf": 0.12336936410632916,
+      "rmse_formula_value": 12.336936410632916,
+      "accuracy_points": 9,
+      "rmse_points": 7,
+      "total_points": 16
+    },
+    {
+      "nominal_pf": 15.0,
+      "readings_pf": [
+        15.49,
+        15.47,
+        15.58,
+        15.48,
+        15.66
+      ],
+      "valid": true,
+      "mean_pf": 15.536000000000001,
+      "accuracy_formula_value": 53.600000000000136,
+      "rmse_pf": 0.5409990757847931,
+      "rmse_formula_value": 54.09990757847931,
+      "accuracy_points": 1,
+      "rmse_points": 0,
+      "total_points": 1
+    },
+    {
+      "nominal_pf": 20.0,
+      "readings_pf": [
+        19.89,
+        19.81,
+        20.02,
+        19.81,
+        19.94
+      ],
+      "valid": true,
+      "mean_pf": 19.894,
+      "accuracy_formula_value": 10.600000000000165,
+      "rmse_pf": 0.13289093272304223,
+      "rmse_formula_value": 13.289093272304223,
+      "accuracy_points": 9,
+      "rmse_points": 7,
+      "total_points": 16
+    }
+  ],
+  "candidates": {
+    "degree_1": {
+      "coefficients_descending": [
+        2.994817263669072,
+        -17.887099643452032
+      ],
+      "training_rmse_pf": 0.25629103017588417,
+      "leave_capacitor_out_rmse_pf": 0.5326347290773781,
+      "training_replay_not_validation": [
+        {
+          "nominal_pf": 5.0,
+          "valid": true,
+          "mean_pf": 4.901999999999999,
+          "accuracy_formula_value": 9.800000000000075,
+          "rmse_pf": 0.14999999999999997,
+          "rmse_formula_value": 14.999999999999996,
+          "accuracy_points": 10,
+          "rmse_points": null,
+          "total_points": null
+        },
+        {
+          "nominal_pf": 10.0,
+          "valid": true,
+          "mean_pf": 9.98,
+          "accuracy_formula_value": 1.9999999999999574,
+          "rmse_pf": 0.06572670690061982,
+          "rmse_formula_value": 6.572670690061982,
+          "accuracy_points": 10,
+          "rmse_points": 8,
+          "total_points": 18
+        },
+        {
+          "nominal_pf": 15.0,
+          "valid": true,
+          "mean_pf": 15.388,
+          "accuracy_formula_value": 38.79999999999999,
+          "rmse_pf": 0.3951202348652874,
+          "rmse_formula_value": 39.51202348652874,
+          "accuracy_points": 4,
+          "rmse_points": 2,
+          "total_points": 6
+        },
+        {
+          "nominal_pf": 20.0,
+          "valid": true,
+          "mean_pf": 19.73,
+          "accuracy_formula_value": 26.999999999999957,
+          "rmse_pf": 0.2808202271917042,
+          "rmse_formula_value": 28.082022719170418,
+          "accuracy_points": 6,
+          "rmse_points": 4,
+          "total_points": 10
+        }
+      ]
+    },
+    "degree_2": {
+      "coefficients_descending": [
+        0.06610730834788588,
+        1.662615701863243,
+        -11.405611410169378
+      ],
+      "training_rmse_pf": 0.18668519223685173,
+      "leave_capacitor_out_rmse_pf": 1.0493807298586662,
+      "training_replay_not_validation": [
+        {
+          "nominal_pf": 5.0,
+          "valid": true,
+          "mean_pf": 5.074,
+          "accuracy_formula_value": 7.399999999999984,
+          "rmse_pf": 0.12529964086141665,
+          "rmse_formula_value": 12.529964086141664,
+          "accuracy_points": 10,
+          "rmse_points": 7,
+          "total_points": 17
+        },
+        {
+          "nominal_pf": 10.0,
+          "valid": true,
+          "mean_pf": 9.788,
+          "accuracy_formula_value": 21.199999999999974,
+          "rmse_pf": 0.21945386758952293,
+          "rmse_formula_value": 21.945386758952292,
+          "accuracy_points": 7,
+          "rmse_points": 5,
+          "total_points": 12
+        },
+        {
+          "nominal_pf": 15.0,
+          "valid": true,
+          "mean_pf": 15.23,
+          "accuracy_formula_value": 23.000000000000043,
+          "rmse_pf": 0.2428579831918231,
+          "rmse_formula_value": 24.285798319182312,
+          "accuracy_points": 7,
+          "rmse_points": 5,
+          "total_points": 12
+        },
+        {
+          "nominal_pf": 20.0,
+          "valid": true,
+          "mean_pf": 19.91,
+          "accuracy_formula_value": 8.999999999999986,
+          "rmse_pf": 0.1256184699795377,
+          "rmse_formula_value": 12.56184699795377,
+          "accuracy_points": 10,
+          "rmse_points": 7,
+          "total_points": 17
+        }
+      ]
+    }
+  },
+  "decision": "Keep uploaded firmware. Refits trade off errors across references; no independent confirmation of improvement.",
+  "limitations": [
+    "References are nominal with +/-5% tolerance, not measured standards.",
+    "Only four capacitors; endpoint exclusion is extrapolation.",
+    "Serial-triggered diagnostic tests do not verify physical button or LED.",
+    "No unknown capacitor tested; no full-score guarantee."
+  ]
+}

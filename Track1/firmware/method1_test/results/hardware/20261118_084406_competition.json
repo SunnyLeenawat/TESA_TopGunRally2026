@@ -1,0 +1,53 @@
+{
+  "port": "COM3",
+  "nominal_reference_pf": 10.0,
+  "trigger": "Serial m in diagnostic mode, not physical button",
+  "readings_pf": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "diagnostics": [
+    "DIAG reference_mv=900 valid=64/64 median_us=2.170833",
+    "DIAG reference_mv=949 valid=64/64 median_us=2.170833",
+    "DIAG reference_mv=894 valid=64/64 median_us=2.170833",
+    "DIAG reference_mv=898 valid=64/64 median_us=2.170833",
+    "DIAG reference_mv=898 valid=64/64 median_us=2.170833"
+  ],
+  "raw_lines": [
+    "DIAG enabled: m=measure, q=contest mode",
+    "TGR-55",
+    "Capacitance = 0.00 pF",
+    "DIAG reference_mv=900 valid=64/64 median_us=2.170833",
+    "TGR-55",
+    "Capacitance = 0.00 pF",
+    "DIAG reference_mv=949 valid=64/64 median_us=2.170833",
+    "TGR-55",
+    "Capacitance = 0.00 pF",
+    "DIAG reference_mv=894 valid=64/64 median_us=2.170833",
+    "TGR-55",
+    "Capacitance = 0.00 pF",
+    "DIAG reference_mv=898 valid=64/64 median_us=2.170833",
+    "TGR-55",
+    "Capacitance = 0.00 pF",
+    "DIAG reference_mv=898 valid=64/64 median_us=2.170833"
+  ],
+  "sources": {
+    "method1_competition.ino": "5d23ca514aa226639110dc8a896db232c8df07a5c5388d34a78c0241eb66d1a4",
+    "calibration_model.h": "fac89d313c329494e0e9ba1f800412123c43240dd58a221a6f00d1eac1c111ab"
+  },
+  "score_vs_nominal": {
+    "valid": false,
+    "accuracy_points": 0,
+    "rmse_points": 0,
+    "total_points": 0
+  },
+  "contest_mode_ignores_m": true,
+  "breadboard": "original breadboard; user confirmed switched back",
+  "calibration": "original Nov 17 round-1",
+  "sample_description": "User-reported single nominal 10 pF, retry after checking connections",
+  "use_for_calibration": false,
+  "interpretation": "Repeated 2.170833 us median gives nonpositive calibrated result; 0.00 is failure sentinel. Cause not established. Next isolate using previously working 20 pF in the same measurement socket."
+}

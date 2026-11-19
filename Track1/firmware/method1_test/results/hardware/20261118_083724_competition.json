@@ -1,0 +1,62 @@
+{
+  "port": "COM3",
+  "nominal_reference_pf": 20.0,
+  "trigger": "Serial m in diagnostic mode, not physical button",
+  "readings_pf": [
+    19.83,
+    19.83,
+    19.83,
+    19.83,
+    19.83
+  ],
+  "diagnostics": [
+    "DIAG reference_mv=903 valid=64/64 median_us=12.420833",
+    "DIAG reference_mv=897 valid=64/64 median_us=12.420833",
+    "DIAG reference_mv=898 valid=64/64 median_us=12.420833",
+    "DIAG reference_mv=966 valid=64/64 median_us=12.420833",
+    "DIAG reference_mv=900 valid=64/64 median_us=12.420833"
+  ],
+  "raw_lines": [
+    "DIAG enabled: m=measure, q=contest mode",
+    "TGR-55",
+    "Capacitance = 19.83 pF",
+    "DIAG reference_mv=903 valid=64/64 median_us=12.420833",
+    "TGR-55",
+    "Capacitance = 19.83 pF",
+    "DIAG reference_mv=897 valid=64/64 median_us=12.420833",
+    "TGR-55",
+    "Capacitance = 19.83 pF",
+    "DIAG reference_mv=898 valid=64/64 median_us=12.420833",
+    "TGR-55",
+    "Capacitance = 19.83 pF",
+    "DIAG reference_mv=966 valid=64/64 median_us=12.420833",
+    "TGR-55",
+    "Capacitance = 19.83 pF",
+    "DIAG reference_mv=900 valid=64/64 median_us=12.420833"
+  ],
+  "sources": {
+    "method1_competition.ino": "5d23ca514aa226639110dc8a896db232c8df07a5c5388d34a78c0241eb66d1a4",
+    "calibration_model.h": "fac89d313c329494e0e9ba1f800412123c43240dd58a221a6f00d1eac1c111ab"
+  },
+  "score_vs_nominal": {
+    "valid": true,
+    "mean_pf": 19.83,
+    "accuracy_formula_value": 17.00000000000017,
+    "rmse_pf": 0.1700000000000017,
+    "rmse_formula_value": 17.00000000000017,
+    "accuracy_points": 8,
+    "rmse_points": 6,
+    "total_points": 14
+  },
+  "contest_mode_ignores_m": true,
+  "breadboard": "original breadboard; user confirmed switched back",
+  "calibration": "original Nov 17 round-1",
+  "sample_description": "Single nominal 20 pF",
+  "build": {
+    "core": "3.3.0",
+    "fqbn": "esp32:esp32:esp32doit-devkit-v1",
+    "upload_verified": true,
+    "binary_sha256": "9fa59ce5febdeb5363fc873fa54801f4675aa9473052fe8e267a1eefbb312423"
+  },
+  "use_for_calibration": false
+}

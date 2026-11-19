@@ -1,0 +1,47 @@
+{
+  "setup_id": "original_board_fixed_layout_20261118",
+  "description": "Original breadboard, current fixed wiring selected by user; do not mix earlier layouts.",
+  "expected_nominal_pf": [
+    5,
+    10,
+    15,
+    20
+  ],
+  "training_batches": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "validation_batches": [
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "sources": [
+    {
+      "nominal_pf": 20,
+      "file": "20261118_085311_104571_competition.json",
+      "sha256": "4c67ed38de8e62ec0d61b488b91eae2a1ffbfcc3e5878d17f18c07ea3bc28fb4"
+    },
+    {
+      "nominal_pf": 15,
+      "file": "20261118_085553_508573_competition.json",
+      "sha256": "45e8d3797aae8dd97dacc9ef3d376a96f10c0a3c20c983b2e81755f042d91eee"
+    }
+  ],
+  "pending_nominal_pf": [
+    5,
+    10
+  ],
+  "status": "Incomplete collection retained; user switched to manual calibration and button-only competition firmware.",
+  "acquisition": "Competition firmware diagnostic m; each saved median represents 64 readings, individual readings not exported."
+}

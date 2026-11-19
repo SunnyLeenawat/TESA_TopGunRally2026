@@ -1,0 +1,56 @@
+{
+  "port": "COM3",
+  "nominal_reference_pf": 15.0,
+  "trigger": "Serial m in diagnostic mode, not physical button",
+  "readings_pf": [
+    30.09,
+    30.27,
+    30.26,
+    30.03,
+    30.31
+  ],
+  "diagnostics": [
+    "DIAG reference_mv=889 valid=64/64 median_us=15.952083",
+    "DIAG reference_mv=898 valid=64/64 median_us=16.014583",
+    "DIAG reference_mv=898 valid=64/64 median_us=16.008333",
+    "DIAG reference_mv=898 valid=64/64 median_us=15.933333",
+    "DIAG reference_mv=929 valid=64/64 median_us=16.027083"
+  ],
+  "raw_lines": [
+    "DIAG enabled: m=measure, q=contest mode",
+    "TGR-55",
+    "Capacitance = 30.09 pF",
+    "DIAG reference_mv=889 valid=64/64 median_us=15.952083",
+    "TGR-55",
+    "Capacitance = 30.27 pF",
+    "DIAG reference_mv=898 valid=64/64 median_us=16.014583",
+    "TGR-55",
+    "Capacitance = 30.26 pF",
+    "DIAG reference_mv=898 valid=64/64 median_us=16.008333",
+    "TGR-55",
+    "Capacitance = 30.03 pF",
+    "DIAG reference_mv=898 valid=64/64 median_us=15.933333",
+    "TGR-55",
+    "Capacitance = 30.31 pF",
+    "DIAG reference_mv=929 valid=64/64 median_us=16.027083"
+  ],
+  "sources": {
+    "method1_competition.ino": "2648ca2728406408f25432fdd19a8e75095b1105fdca246819085673c06acfe4",
+    "calibration_model.h": "e2ad14a3b34e716da0ba79415467b68cbabc9497cbf2a1cf736220666c97ed95"
+  },
+  "score_vs_nominal": {
+    "valid": true,
+    "mean_pf": 30.192,
+    "accuracy_formula_value": 1519.2,
+    "rmse_pf": 15.192403364839942,
+    "rmse_formula_value": 1519.2403364839943,
+    "accuracy_points": 0,
+    "rmse_points": 0,
+    "total_points": 0
+  },
+  "contest_mode_ignores_m": true,
+  "sample_description": "User-reported parallel assembly: 5 pF + 10 pF; wiring and component identity not independently verified",
+  "use_for_calibration": false,
+  "interpretation": "Unexpected approximately 30 pF result, outside 5-20 pF calibrated range. Inspect assembly before interpreting accuracy; do not fit this as a confirmed 15 pF standard.",
+  "user_correction": "User confirmed wrong capacitor selected; actual assembly values unknown."
+}

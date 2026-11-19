@@ -1,0 +1,223 @@
+{
+  "port": "COM3",
+  "nominal_reference_pf": 20.0,
+  "setup_id": "original_board_fixed_layout_20261118",
+  "requested_batches": 15,
+  "trigger": "Serial m in diagnostic mode, not physical button",
+  "readings_pf": [
+    17.95,
+    18.06,
+    18.0,
+    18.0,
+    18.14,
+    18.02,
+    18.06,
+    18.04,
+    18.04,
+    18.0,
+    18.06,
+    18.16,
+    17.98,
+    18.0,
+    18.08
+  ],
+  "diagnostics": [
+    "DIAG reference_mv=908 valid=64/64 median_us=11.808333",
+    "DIAG reference_mv=876 valid=64/64 median_us=11.845833",
+    "DIAG reference_mv=903 valid=64/64 median_us=11.827083",
+    "DIAG reference_mv=903 valid=64/64 median_us=11.827083",
+    "DIAG reference_mv=875 valid=64/64 median_us=11.870833",
+    "DIAG reference_mv=890 valid=64/64 median_us=11.833333",
+    "DIAG reference_mv=892 valid=64/64 median_us=11.845833",
+    "DIAG reference_mv=906 valid=64/64 median_us=11.839583",
+    "DIAG reference_mv=898 valid=64/64 median_us=11.839583",
+    "DIAG reference_mv=902 valid=64/64 median_us=11.827083",
+    "DIAG reference_mv=894 valid=64/64 median_us=11.845833",
+    "DIAG reference_mv=902 valid=64/64 median_us=11.877083",
+    "DIAG reference_mv=898 valid=64/64 median_us=11.820833",
+    "DIAG reference_mv=905 valid=64/64 median_us=11.827083",
+    "DIAG reference_mv=892 valid=64/64 median_us=11.852083"
+  ],
+  "measurements": [
+    {
+      "batch": 1,
+      "reference_mv": 908,
+      "valid_count": 64,
+      "median_us": 11.808333,
+      "displayed_pf": 17.95
+    },
+    {
+      "batch": 2,
+      "reference_mv": 876,
+      "valid_count": 64,
+      "median_us": 11.845833,
+      "displayed_pf": 18.06
+    },
+    {
+      "batch": 3,
+      "reference_mv": 903,
+      "valid_count": 64,
+      "median_us": 11.827083,
+      "displayed_pf": 18.0
+    },
+    {
+      "batch": 4,
+      "reference_mv": 903,
+      "valid_count": 64,
+      "median_us": 11.827083,
+      "displayed_pf": 18.0
+    },
+    {
+      "batch": 5,
+      "reference_mv": 875,
+      "valid_count": 64,
+      "median_us": 11.870833,
+      "displayed_pf": 18.14
+    },
+    {
+      "batch": 6,
+      "reference_mv": 890,
+      "valid_count": 64,
+      "median_us": 11.833333,
+      "displayed_pf": 18.02
+    },
+    {
+      "batch": 7,
+      "reference_mv": 892,
+      "valid_count": 64,
+      "median_us": 11.845833,
+      "displayed_pf": 18.06
+    },
+    {
+      "batch": 8,
+      "reference_mv": 906,
+      "valid_count": 64,
+      "median_us": 11.839583,
+      "displayed_pf": 18.04
+    },
+    {
+      "batch": 9,
+      "reference_mv": 898,
+      "valid_count": 64,
+      "median_us": 11.839583,
+      "displayed_pf": 18.04
+    },
+    {
+      "batch": 10,
+      "reference_mv": 902,
+      "valid_count": 64,
+      "median_us": 11.827083,
+      "displayed_pf": 18.0
+    },
+    {
+      "batch": 11,
+      "reference_mv": 894,
+      "valid_count": 64,
+      "median_us": 11.845833,
+      "displayed_pf": 18.06
+    },
+    {
+      "batch": 12,
+      "reference_mv": 902,
+      "valid_count": 64,
+      "median_us": 11.877083,
+      "displayed_pf": 18.16
+    },
+    {
+      "batch": 13,
+      "reference_mv": 898,
+      "valid_count": 64,
+      "median_us": 11.820833,
+      "displayed_pf": 17.98
+    },
+    {
+      "batch": 14,
+      "reference_mv": 905,
+      "valid_count": 64,
+      "median_us": 11.827083,
+      "displayed_pf": 18.0
+    },
+    {
+      "batch": 15,
+      "reference_mv": 892,
+      "valid_count": 64,
+      "median_us": 11.852083,
+      "displayed_pf": 18.08
+    }
+  ],
+  "raw_lines": [
+    "DIAG enabled: m=measure, q=contest mode",
+    "TGR-55",
+    "Capacitance = 17.95 pF",
+    "DIAG reference_mv=908 valid=64/64 median_us=11.808333",
+    "TGR-55",
+    "Capacitance = 18.06 pF",
+    "DIAG reference_mv=876 valid=64/64 median_us=11.845833",
+    "TGR-55",
+    "Capacitance = 18.00 pF",
+    "DIAG reference_mv=903 valid=64/64 median_us=11.827083",
+    "TGR-55",
+    "Capacitance = 18.00 pF",
+    "DIAG reference_mv=903 valid=64/64 median_us=11.827083",
+    "TGR-55",
+    "Capacitance = 18.14 pF",
+    "DIAG reference_mv=875 valid=64/64 median_us=11.870833",
+    "TGR-55",
+    "Capacitance = 18.02 pF",
+    "DIAG reference_mv=890 valid=64/64 median_us=11.833333",
+    "TGR-55",
+    "Capacitance = 18.06 pF",
+    "DIAG reference_mv=892 valid=64/64 median_us=11.845833",
+    "TGR-55",
+    "Capacitance = 18.04 pF",
+    "DIAG reference_mv=906 valid=64/64 median_us=11.839583",
+    "TGR-55",
+    "Capacitance = 18.04 pF",
+    "DIAG reference_mv=898 valid=64/64 median_us=11.839583",
+    "TGR-55",
+    "Capacitance = 18.00 pF",
+    "DIAG reference_mv=902 valid=64/64 median_us=11.827083",
+    "TGR-55",
+    "Capacitance = 18.06 pF",
+    "DIAG reference_mv=894 valid=64/64 median_us=11.845833",
+    "TGR-55",
+    "Capacitance = 18.16 pF",
+    "DIAG reference_mv=902 valid=64/64 median_us=11.877083",
+    "TGR-55",
+    "Capacitance = 17.98 pF",
+    "DIAG reference_mv=898 valid=64/64 median_us=11.820833",
+    "TGR-55",
+    "Capacitance = 18.00 pF",
+    "DIAG reference_mv=905 valid=64/64 median_us=11.827083",
+    "TGR-55",
+    "Capacitance = 18.08 pF",
+    "DIAG reference_mv=892 valid=64/64 median_us=11.852083"
+  ],
+  "sources": {
+    "method1_competition.ino": "5d23ca514aa226639110dc8a896db232c8df07a5c5388d34a78c0241eb66d1a4",
+    "calibration_model.h": "fac89d313c329494e0e9ba1f800412123c43240dd58a221a6f00d1eac1c111ab"
+  },
+  "complete": true,
+  "calibration_split": {
+    "training_batches": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "validation_batches": [
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "contest_mode_ignores_m": true
+}

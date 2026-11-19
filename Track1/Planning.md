@@ -1,5 +1,7 @@
 # Track 1: Capacitance Experiments and Coffee Moisture Meter
 
+Day 2 implementation: see [Planning_Day2.md](Planning_Day2.md) for the supplied rectangular PCB sensor, labelled coffee bags (6.6%, 11.4%, 14.4%), circuit, independent-refill validation, and the new coffee_test/coffee_competition sketches. Day 1 calibration coefficients must not be reused automatically for this sensor.
+
 TESA Top Gun Rally 2026 #20 - Precision Sensing (ESP32 & Sensor)
 
 Status: implementation plan; no measurement results or winning method established yet.

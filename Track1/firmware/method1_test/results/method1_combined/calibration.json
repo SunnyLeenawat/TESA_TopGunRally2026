@@ -1,0 +1,150 @@
+{
+  "sources": [
+    {
+      "nominal_pf": 5,
+      "file": "20261117_191532_611032_5pf.csv",
+      "sha256": "3cd87a938b52db88d3a2102641d2c57409497d4e186d757475a83e2fe7ca0d3a",
+      "session": 1
+    },
+    {
+      "nominal_pf": 10,
+      "file": "20261117_192226_294059_10pf.csv",
+      "sha256": "a193561924b72017dfa8215c29772d7ab76f706f54633b48b87d7513809b53e9",
+      "session": 1
+    },
+    {
+      "nominal_pf": 15,
+      "file": "20261117_200129_124924_15pf.csv",
+      "sha256": "30fc08c031a8768596a65d69c50ce6cd074932c8efac3466412f1f0464055733",
+      "session": 1
+    },
+    {
+      "nominal_pf": 20,
+      "file": "20261117_200506_323610_20pf.csv",
+      "sha256": "39b884ee3037bc279b60dc14bb0c967bec728bdb48e5585c68ed72ae605277b7",
+      "session": 1
+    },
+    {
+      "nominal_pf": 5,
+      "file": "20261117_201611_317984_5pf.csv",
+      "sha256": "7a33d2e316922fd87e72a0d9834f4e431cf0f0595365214c8518cc14f849dd7d",
+      "session": 2
+    },
+    {
+      "nominal_pf": 10,
+      "file": "20261117_201504_115277_10pf.csv",
+      "sha256": "8e10a964bfaedd8cbf460ee56060752949db8d23160dfd4f9a436945635e6e65",
+      "session": 2
+    },
+    {
+      "nominal_pf": 15,
+      "file": "20261117_201334_003271_15pf.csv",
+      "sha256": "4f7c3decf2ad22c96a88329934fe23918ffaa9186237bdced2d4b55862bd34a7",
+      "session": 2
+    },
+    {
+      "nominal_pf": 20,
+      "file": "20261117_201206_298023_20pf.csv",
+      "sha256": "73befb24f298b41459469829f128d97f9e2a62655a5af2cfa12ef2470ed0b350",
+      "session": 2
+    }
+  ],
+  "batch_count": 40,
+  "raw_reading_count": 2560,
+  "aggregation": "Median of all 64 cycle counts / 240 MHz; no outliers removed",
+  "selection": "degree_1_relative",
+  "comparison": {
+    "degree_1_absolute": {
+      "leave_session_out": {
+        "rmse_pf": 0.36378102496716735,
+        "relative_rmse_pct": 5.339781200236204
+      },
+      "leave_capacitor_out": {
+        "rmse_pf": 0.43335040190099244,
+        "relative_rmse_pct": 4.646246503674242
+      }
+    },
+    "degree_1_relative": {
+      "leave_session_out": {
+        "rmse_pf": 0.3605171060245823,
+        "relative_rmse_pct": 4.941983771082126
+      },
+      "leave_capacitor_out": {
+        "rmse_pf": 0.3977471631121425,
+        "relative_rmse_pct": 3.678095340045017
+      }
+    },
+    "degree_2_absolute": {
+      "leave_session_out": {
+        "rmse_pf": 0.32501996279762424,
+        "relative_rmse_pct": 4.7007666252569615
+      },
+      "leave_capacitor_out": {
+        "rmse_pf": 0.6144458217684846,
+        "relative_rmse_pct": 9.597121678683695
+      }
+    },
+    "degree_2_relative": {
+      "leave_session_out": {
+        "rmse_pf": 0.33437402002793054,
+        "relative_rmse_pct": 4.722321312199265
+      },
+      "leave_capacitor_out": {
+        "rmse_pf": 0.6262451741993041,
+        "relative_rmse_pct": 10.678675377810789
+      }
+    }
+  },
+  "calibration": {
+    "slope": 2.9690151954173993,
+    "intercept": -17.219924456350515,
+    "nominal_range_pf": [
+      5,
+      20
+    ],
+    "cpu_mhz": 240
+  },
+  "retrospective_old": {
+    "rmse_pf": 0.2951383640757847,
+    "relative_rmse_pct": 4.517518933779714
+  },
+  "training_new": {
+    "rmse_pf": 0.26545975832620156,
+    "relative_rmse_pct": 2.7279600186295414
+  },
+  "summary": [
+    {
+      "nominal_pf": 5,
+      "old_mean_pf": 4.6441044953868715,
+      "new_mean_pf": 4.991401929533524,
+      "new_round2_mean_pf": 4.778003962362899
+    },
+    {
+      "nominal_pf": 10,
+      "old_mean_pf": 9.873615049636658,
+      "new_mean_pf": 10.042439030737375,
+      "new_round2_mean_pf": 9.825329794572479
+    },
+    {
+      "nominal_pf": 15,
+      "old_mean_pf": 15.187658471038167,
+      "new_mean_pf": 15.175124049815206,
+      "new_round2_mean_pf": 15.12502191839254
+    },
+    {
+      "nominal_pf": 20,
+      "old_mean_pf": 19.827360156752075,
+      "new_mean_pf": 19.656481360398338,
+      "new_round2_mean_pf": 19.686171512352516
+    }
+  ],
+  "limitations": [
+    "Model selection used both sessions; grouped scores are exploratory, not a final independent test.",
+    "Final coefficients fitted on both sessions; their replay error is training error.",
+    "Only four physical capacitors with nominal +/-5% tolerance; absolute accuracy is unknown.",
+    "Endpoint leave-capacitor-out folds are extrapolation.",
+    "Data came from bench firmware, not competition firmware; fresh hardware validation required.",
+    "No reference-voltage correction inferred from these data; keep the original circuit and reference.",
+    "Failed initial_low file excluded; only the eight previously verified source files used."
+  ]
+}

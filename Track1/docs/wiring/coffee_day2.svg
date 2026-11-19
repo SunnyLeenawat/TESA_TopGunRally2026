@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="960" viewBox="0 0 1200 960">
+<title>Day 2 coffee sensor wiring — ESP32 DOIT and LM393 DIP-8</title>
+<desc>Four panels show sensor input, reference and output, DIP pinout, and button wiring. All ground labels are connected. All supply labels mean ESP32 3.3 volts.</desc>
+<style>text{font-family:Arial,sans-serif;fill:#15283e;font-size:19px}.title{font-size:28px;font-weight:bold}.head{font-size:22px;font-weight:bold}.small{font-size:16px}.wire{fill:none;stroke:#176b92;stroke-width:3;stroke-linejoin:round}.part{fill:white;stroke:#15283e;stroke-width:3}.node{fill:#176b92}.panel{fill:#f4f8fb;stroke:#c5d5e3;stroke-width:2}</style>
+<rect width="1200" height="960" fill="white"/>
+<text x="30" y="42" class="title">Day 2 · Coffee moisture sensor · TGR-55</text>
+<text x="30" y="73">All GND points connect together. All 3.3V points connect to ESP32 3V3.</text>
+<rect class="panel" x="20" y="95" width="570" height="355" rx="12"/>
+<text class="head" x="40" y="130">1. Sensor / charging circuit</text>
+<text x="40" y="185">GPIO25</text>
+<path class="wire" d="M125 180 H165 M255 180 H535 M350 180 V265 M350 285 V355"/>
+<rect class="part" x="165" y="168" width="90" height="24"/>
+<text x="170" y="157">1 MΩ</text><circle class="node" cx="350" cy="180" r="6"/>
+<text x="330" y="157">A</text><text x="400" y="210">LM393 pin 2 (−)</text>
+<path class="part" d="M295 265 H405 M295 285 H405"/>
+<text class="small" x="415" y="265">Plate 1</text><text class="small" x="415" y="291">Plate 2</text>
+<text x="325" y="382">GND</text>
+<text class="small" x="40" y="415">Coffee between plates; plates must not touch.</text>
+<rect class="panel" x="610" y="95" width="570" height="355" rx="12"/>
+<text class="head" x="630" y="130">2. Reference + comparator output</text>
+<text x="642" y="170">3.3V</text><text x="642" y="323">GND</text>
+<path class="wire" d="M675 180 V200 M675 280 V295 M692 240 H790 V200 H900 M790 240 H900 M790 240 V280 H900"/>
+<rect class="part" x="663" y="200" width="24" height="80"/>
+<path class="wire" d="M720 240 H687 l12 -7 M687 240 l12 7"/>
+<text class="small" x="704" y="192">10 kΩ pot</text><text class="small" x="704" y="222">wiper → B</text>
+<circle class="node" cx="790" cy="240" r="5"/>
+<text x="910" y="206">pin 3 (+)</text><text x="910" y="246">GPIO34</text><text x="910" y="286">pin 6 (−)</text>
+<text class="small" x="630" y="350">Set B to about 900 mV relative to GND.</text>
+<text x="630" y="400">3.3V</text><path class="wire" d="M687 394 H715 M785 394 H840 H920 M840 394 V428 H920"/>
+<rect class="part" x="715" y="383" width="70" height="22"/><text class="small" x="726" y="377">2 kΩ</text>
+<circle class="node" cx="840" cy="394" r="5"/><text x="930" y="400">pin 1 (OUT)</text><text class="small" x="930" y="434">GPIO27 · FALLING</text>
+<rect class="panel" x="20" y="470" width="570" height="395" rx="12"/>
+<text class="head" x="40" y="506">3. LM393 DIP-8 · TOP VIEW</text>
+<text class="small" x="40" y="535">Notch faces up. Place IC across breadboard centre gap.</text>
+<rect class="part" x="245" y="565" width="110" height="225" rx="5"/>
+<path class="part" d="M285 565 A15 15 0 0 0 315 565"/>
+<circle cx="262" cy="591" r="4" fill="#15283e"/>
+<text x="264" y="682">LM393</text>
+<path class="wire" d="M220 605 H245 M220 655 H245 M220 705 H245 M220 755 H245 M355 605 H380 M355 655 H380 M355 705 H380 M355 755 H380"/>
+<text x="60" y="611">OUT / GPIO27   1</text><text x="60" y="661">A / sensor (−)  2</text><text x="60" y="711">B / Vref (+)     3</text><text x="60" y="761">GND               4</text>
+<text x="390" y="611">8   3.3V</text><text x="390" y="661">7   No connection</text><text x="390" y="711">6   B / Vref (−)</text><text x="390" y="761">5   GND (+)</text>
+<text class="small" x="40" y="832">Pin numbers are for DIP-8, viewed from above.</text>
+<rect class="panel" x="610" y="470" width="570" height="395" rx="12"/>
+<text class="head" x="630" y="506">4. Button + 0.1 µF (100 nF)</text>
+<text x="630" y="586">GPIO26</text><text x="1070" y="586">GND</text>
+<path class="wire" d="M715 580 H855 M945 580 H1060 M780 580 V695 H890 M910 695 H1010 V580"/>
+<circle class="node" cx="780" cy="580" r="5"/><circle class="node" cx="1010" cy="580" r="5"/>
+<circle class="part" cx="855" cy="580" r="5"/><circle class="part" cx="945" cy="580" r="5"/>
+<path class="part" d="M855 580 L930 552 M890 670 V720 M910 670 V720"/>
+<text x="840" y="540">Push button</text><text x="840" y="754">100 nF ceramic</text>
+<text class="small" x="630" y="798">Capacitor is parallel to the button; no polarity.</text>
+<text class="small" x="630" y="826">GPIO26 uses ESP32 internal pull-up.</text>
+<text x="30" y="902">Disconnect USB before changing wires. Keep node A and sensor leads short and fixed.</text>
+<text class="small" x="30" y="934">Electrical connection diagram, not a breadboard hole map. GPIO2 is the onboard LED used by firmware.</text>
+</svg>

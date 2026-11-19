@@ -1,0 +1,56 @@
+{
+  "port": "COM3",
+  "nominal_reference_pf": 15.0,
+  "trigger": "Serial m in diagnostic mode, not physical button",
+  "readings_pf": [
+    14.53,
+    14.45,
+    14.53,
+    14.47,
+    14.47
+  ],
+  "diagnostics": [
+    "DIAG reference_mv=903 valid=64/64 median_us=10.695833",
+    "DIAG reference_mv=898 valid=64/64 median_us=10.670833",
+    "DIAG reference_mv=895 valid=64/64 median_us=10.695833",
+    "DIAG reference_mv=891 valid=64/64 median_us=10.677083",
+    "DIAG reference_mv=911 valid=64/64 median_us=10.677083"
+  ],
+  "raw_lines": [
+    "DIAG enabled: m=measure, q=contest mode",
+    "TGR-55",
+    "Capacitance = 14.53 pF",
+    "DIAG reference_mv=903 valid=64/64 median_us=10.695833",
+    "TGR-55",
+    "Capacitance = 14.45 pF",
+    "DIAG reference_mv=898 valid=64/64 median_us=10.670833",
+    "TGR-55",
+    "Capacitance = 14.53 pF",
+    "DIAG reference_mv=895 valid=64/64 median_us=10.695833",
+    "TGR-55",
+    "Capacitance = 14.47 pF",
+    "DIAG reference_mv=891 valid=64/64 median_us=10.677083",
+    "TGR-55",
+    "Capacitance = 14.47 pF",
+    "DIAG reference_mv=911 valid=64/64 median_us=10.677083"
+  ],
+  "sources": {
+    "method1_competition.ino": "5d23ca514aa226639110dc8a896db232c8df07a5c5388d34a78c0241eb66d1a4",
+    "calibration_model.h": "fac89d313c329494e0e9ba1f800412123c43240dd58a221a6f00d1eac1c111ab"
+  },
+  "score_vs_nominal": {
+    "valid": true,
+    "mean_pf": 14.49,
+    "accuracy_formula_value": 50.99999999999998,
+    "rmse_pf": 0.5110968597046944,
+    "rmse_formula_value": 51.10968597046944,
+    "accuracy_points": 1,
+    "rmse_points": 0,
+    "total_points": 1
+  },
+  "contest_mode_ignores_m": true,
+  "breadboard": "original breadboard; user confirmed switched back",
+  "calibration": "original Nov 17 round-1",
+  "sample_description": "Single nominal 15 pF, after reconnecting USB",
+  "use_for_calibration": false
+}

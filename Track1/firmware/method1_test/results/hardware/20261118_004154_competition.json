@@ -1,0 +1,55 @@
+{
+  "port": "COM3",
+  "nominal_reference_pf": 15.0,
+  "trigger": "Serial m in diagnostic mode, not physical button",
+  "readings_pf": [
+    15.53,
+    15.3,
+    15.34,
+    15.49,
+    15.42
+  ],
+  "diagnostics": [
+    "DIAG reference_mv=901 valid=64/64 median_us=11.108333",
+    "DIAG reference_mv=898 valid=64/64 median_us=11.033333",
+    "DIAG reference_mv=898 valid=64/64 median_us=11.045833",
+    "DIAG reference_mv=900 valid=64/64 median_us=11.095833",
+    "DIAG reference_mv=899 valid=64/64 median_us=11.070833"
+  ],
+  "raw_lines": [
+    "DIAG enabled: m=measure, q=contest mode",
+    "TGR-55",
+    "Capacitance = 15.53 pF",
+    "DIAG reference_mv=901 valid=64/64 median_us=11.108333",
+    "TGR-55",
+    "Capacitance = 15.30 pF",
+    "DIAG reference_mv=898 valid=64/64 median_us=11.033333",
+    "TGR-55",
+    "Capacitance = 15.34 pF",
+    "DIAG reference_mv=898 valid=64/64 median_us=11.045833",
+    "TGR-55",
+    "Capacitance = 15.49 pF",
+    "DIAG reference_mv=900 valid=64/64 median_us=11.095833",
+    "TGR-55",
+    "Capacitance = 15.42 pF",
+    "DIAG reference_mv=899 valid=64/64 median_us=11.070833"
+  ],
+  "sources": {
+    "method1_competition.ino": "2648ca2728406408f25432fdd19a8e75095b1105fdca246819085673c06acfe4",
+    "calibration_model.h": "e2ad14a3b34e716da0ba79415467b68cbabc9497cbf2a1cf736220666c97ed95"
+  },
+  "score_vs_nominal": {
+    "valid": true,
+    "mean_pf": 15.416,
+    "accuracy_formula_value": 41.60000000000004,
+    "rmse_pf": 0.4249705872175155,
+    "rmse_formula_value": 42.49705872175155,
+    "accuracy_points": 3,
+    "rmse_points": 1,
+    "total_points": 4
+  },
+  "contest_mode_ignores_m": true,
+  "sample_description": "User-corrected parallel assembly: nominal 5 pF + 10 pF",
+  "use_for_calibration": false,
+  "purpose": "Diagnostic comparison with single nominal 15 pF; actual capacitance and wiring parasitics unknown."
+}

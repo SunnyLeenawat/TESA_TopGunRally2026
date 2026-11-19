@@ -1,0 +1,52 @@
+{
+  "port": "COM3",
+  "nominal_reference_pf": 5.0,
+  "trigger": "Serial m in diagnostic mode, not physical button",
+  "readings_pf": [
+    5.08,
+    4.9,
+    5.07,
+    5.16,
+    4.86
+  ],
+  "diagnostics": [
+    "DIAG reference_mv=903 valid=64/64 median_us=7.633333",
+    "DIAG reference_mv=911 valid=64/64 median_us=7.570833",
+    "DIAG reference_mv=905 valid=64/64 median_us=7.627083",
+    "DIAG reference_mv=898 valid=64/64 median_us=7.658333",
+    "DIAG reference_mv=900 valid=64/64 median_us=7.558333"
+  ],
+  "raw_lines": [
+    "DIAG enabled: m=measure, q=contest mode",
+    "TGR-55",
+    "Capacitance = 5.08 pF",
+    "DIAG reference_mv=903 valid=64/64 median_us=7.633333",
+    "TGR-55",
+    "Capacitance = 4.90 pF",
+    "DIAG reference_mv=911 valid=64/64 median_us=7.570833",
+    "TGR-55",
+    "Capacitance = 5.07 pF",
+    "DIAG reference_mv=905 valid=64/64 median_us=7.627083",
+    "TGR-55",
+    "Capacitance = 5.16 pF",
+    "DIAG reference_mv=898 valid=64/64 median_us=7.658333",
+    "TGR-55",
+    "Capacitance = 4.86 pF",
+    "DIAG reference_mv=900 valid=64/64 median_us=7.558333"
+  ],
+  "sources": {
+    "method1_competition.ino": "2648ca2728406408f25432fdd19a8e75095b1105fdca246819085673c06acfe4",
+    "calibration_model.h": "e2ad14a3b34e716da0ba79415467b68cbabc9497cbf2a1cf736220666c97ed95"
+  },
+  "score_vs_nominal": {
+    "valid": true,
+    "mean_pf": 5.014,
+    "accuracy_formula_value": 1.4000000000000234,
+    "rmse_pf": 0.11532562594670791,
+    "rmse_formula_value": 11.532562594670791,
+    "accuracy_points": 10,
+    "rmse_points": 7,
+    "total_points": 17
+  },
+  "contest_mode_ignores_m": true
+}

@@ -1,0 +1,474 @@
+{
+  "sources": [
+    {
+      "file": "20261118_000627_645444_5pf.csv",
+      "nominal_pf": 5,
+      "sha256": "86852a90325b793818f435f6acc197fee8fef2864e857c9e74857bdabc729c10",
+      "reference_mv_range": [
+        878,
+        930
+      ]
+    },
+    {
+      "file": "20261118_000518_104879_10pf.csv",
+      "nominal_pf": 10,
+      "sha256": "011f55f3756d8e6d31760a55cdf20dfc2db8f266c28f3416355531c0d341e1c6",
+      "reference_mv_range": [
+        874,
+        936
+      ]
+    },
+    {
+      "file": "20261118_000207_665911_15pf.csv",
+      "nominal_pf": 15,
+      "sha256": "d945faaf989e9c02365af1c06c10ba4af3fb99d87564b8593b318d450673fce8",
+      "reference_mv_range": [
+        877,
+        907
+      ]
+    },
+    {
+      "file": "20261118_000355_980613_20pf.csv",
+      "nominal_pf": 20,
+      "sha256": "ed11d3c73c219a4332a38d692be84e5c9366d2d9992b6528cc5f94fdd46ff593",
+      "reference_mv_range": [
+        882,
+        930
+      ]
+    }
+  ],
+  "raw_readings": 3840,
+  "training_batches_per_capacitor": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "validation_batches_per_capacitor": [
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "selected_model": "polynomial_1",
+  "calibration": {
+    "slope": 3.005639758785479,
+    "intercept": -17.859153176057443
+  },
+  "selection_rule": "Lowest leave-capacitor-out RMSE on training batches among linear, quadratic, piecewise.",
+  "time_knots_us": [
+    7.589791666666666,
+    9.242291666666667,
+    11.044791666666665,
+    12.526041666666668
+  ],
+  "capacitance_knots_pf": [
+    5.0,
+    10.0,
+    15.0,
+    20.0
+  ],
+  "comparison": {
+    "previous": {
+      "validation_rmse_pf": 0.3588532681279691,
+      "validation_five_presses": [
+        {
+          "nominal_pf": 5,
+          "readings_pf": [
+            5.28,
+            5.32,
+            5.36,
+            5.38,
+            5.34
+          ],
+          "valid": true,
+          "mean_pf": 5.336,
+          "accuracy_formula_value": 33.60000000000003,
+          "rmse_pf": 0.3377573093213529,
+          "rmse_formula_value": 33.77573093213529,
+          "accuracy_points": 5,
+          "rmse_points": 3,
+          "total_points": 8
+        },
+        {
+          "nominal_pf": 10,
+          "readings_pf": [
+            10.22,
+            10.27,
+            10.37,
+            10.22,
+            10.14
+          ],
+          "valid": true,
+          "mean_pf": 10.244,
+          "accuracy_formula_value": 24.399999999999977,
+          "rmse_pf": 0.25542122073155943,
+          "rmse_formula_value": 25.542122073155944,
+          "accuracy_points": 7,
+          "rmse_points": 4,
+          "total_points": 11
+        },
+        {
+          "nominal_pf": 15,
+          "readings_pf": [
+            15.58,
+            15.67,
+            15.56,
+            15.51,
+            15.53
+          ],
+          "valid": true,
+          "mean_pf": 15.569999999999999,
+          "accuracy_formula_value": 56.99999999999985,
+          "rmse_pf": 0.5726953815074817,
+          "rmse_formula_value": 57.26953815074817,
+          "accuracy_points": 0,
+          "rmse_points": 0,
+          "total_points": 0
+        },
+        {
+          "nominal_pf": 20,
+          "readings_pf": [
+            19.91,
+            19.94,
+            20.09,
+            19.88,
+            20.07
+          ],
+          "valid": true,
+          "mean_pf": 19.978,
+          "accuracy_formula_value": 2.1999999999998465,
+          "rmse_pf": 0.08843076387773667,
+          "rmse_formula_value": 8.843076387773667,
+          "accuracy_points": 10,
+          "rmse_points": 8,
+          "total_points": 18
+        }
+      ]
+    },
+    "piecewise_linear": {
+      "validation_rmse_pf": 0.07179571363327383,
+      "validation_five_presses": [
+        {
+          "nominal_pf": 5,
+          "readings_pf": [
+            4.97,
+            5.01,
+            5.04,
+            5.06,
+            5.02
+          ],
+          "valid": true,
+          "mean_pf": 5.02,
+          "accuracy_formula_value": 1.9999999999999574,
+          "rmse_pf": 0.036331804249169763,
+          "rmse_formula_value": 3.6331804249169766,
+          "accuracy_points": 10,
+          "rmse_points": 9,
+          "total_points": 19
+        },
+        {
+          "nominal_pf": 10,
+          "readings_pf": [
+            10.0,
+            10.05,
+            10.14,
+            10.0,
+            9.92
+          ],
+          "valid": true,
+          "mean_pf": 10.022,
+          "accuracy_formula_value": 2.200000000000024,
+          "rmse_pf": 0.07549834435270782,
+          "rmse_formula_value": 7.549834435270782,
+          "accuracy_points": 10,
+          "rmse_points": 8,
+          "total_points": 18
+        },
+        {
+          "nominal_pf": 15,
+          "readings_pf": [
+            15.01,
+            15.12,
+            14.99,
+            14.94,
+            14.96
+          ],
+          "valid": true,
+          "mean_pf": 15.004,
+          "accuracy_formula_value": 0.39999999999995595,
+          "rmse_pf": 0.06292853089020876,
+          "rmse_formula_value": 6.292853089020876,
+          "accuracy_points": 10,
+          "rmse_points": 8,
+          "total_points": 18
+        },
+        {
+          "nominal_pf": 20,
+          "readings_pf": [
+            19.93,
+            19.97,
+            20.14,
+            19.9,
+            20.12
+          ],
+          "valid": true,
+          "mean_pf": 20.012,
+          "accuracy_formula_value": 1.2000000000000455,
+          "rmse_pf": 0.09979979959899798,
+          "rmse_formula_value": 9.979979959899799,
+          "accuracy_points": 10,
+          "rmse_points": 8,
+          "total_points": 18
+        }
+      ]
+    },
+    "polynomial_1": {
+      "validation_rmse_pf": 0.2092725894731656,
+      "validation_five_presses": [
+        {
+          "nominal_pf": 5,
+          "readings_pf": [
+            4.92,
+            4.96,
+            5.0,
+            5.02,
+            4.98
+          ],
+          "valid": true,
+          "mean_pf": 4.976,
+          "accuracy_formula_value": 2.400000000000002,
+          "rmse_pf": 0.04195235392680601,
+          "rmse_formula_value": 4.195235392680601,
+          "accuracy_points": 10,
+          "rmse_points": 9,
+          "total_points": 19
+        },
+        {
+          "nominal_pf": 10,
+          "readings_pf": [
+            9.92,
+            9.97,
+            10.07,
+            9.92,
+            9.84
+          ],
+          "valid": true,
+          "mean_pf": 9.943999999999999,
+          "accuracy_formula_value": 5.600000000000094,
+          "rmse_pf": 0.09402127418834534,
+          "rmse_formula_value": 9.402127418834533,
+          "accuracy_points": 10,
+          "rmse_points": 8,
+          "total_points": 18
+        },
+        {
+          "nominal_pf": 15,
+          "readings_pf": [
+            15.35,
+            15.44,
+            15.33,
+            15.27,
+            15.29
+          ],
+          "valid": true,
+          "mean_pf": 15.335999999999999,
+          "accuracy_formula_value": 33.59999999999985,
+          "rmse_pf": 0.3411744421846392,
+          "rmse_formula_value": 34.11744421846392,
+          "accuracy_points": 5,
+          "rmse_points": 3,
+          "total_points": 8
+        },
+        {
+          "nominal_pf": 20,
+          "readings_pf": [
+            19.72,
+            19.76,
+            19.91,
+            19.7,
+            19.89
+          ],
+          "valid": true,
+          "mean_pf": 19.796,
+          "accuracy_formula_value": 20.400000000000063,
+          "rmse_pf": 0.22190087877248263,
+          "rmse_formula_value": 22.190087877248263,
+          "accuracy_points": 7,
+          "rmse_points": 5,
+          "total_points": 12
+        }
+      ]
+    },
+    "polynomial_2": {
+      "validation_rmse_pf": 0.17109471575122373,
+      "validation_five_presses": [
+        {
+          "nominal_pf": 5,
+          "readings_pf": [
+            5.04,
+            5.08,
+            5.11,
+            5.13,
+            5.1
+          ],
+          "valid": true,
+          "mean_pf": 5.0920000000000005,
+          "accuracy_formula_value": 9.200000000000053,
+          "rmse_pf": 0.09695359714832656,
+          "rmse_formula_value": 9.695359714832657,
+          "accuracy_points": 10,
+          "rmse_points": 8,
+          "total_points": 18
+        },
+        {
+          "nominal_pf": 10,
+          "readings_pf": [
+            9.79,
+            9.84,
+            9.93,
+            9.79,
+            9.72
+          ],
+          "valid": true,
+          "mean_pf": 9.814,
+          "accuracy_formula_value": 18.599999999999994,
+          "rmse_pf": 0.1985447052932918,
+          "rmse_formula_value": 19.85447052932918,
+          "accuracy_points": 8,
+          "rmse_points": 6,
+          "total_points": 14
+        },
+        {
+          "nominal_pf": 15,
+          "readings_pf": [
+            15.23,
+            15.33,
+            15.21,
+            15.16,
+            15.17
+          ],
+          "valid": true,
+          "mean_pf": 15.219999999999999,
+          "accuracy_formula_value": 21.999999999999886,
+          "rmse_pf": 0.22821042920953488,
+          "rmse_formula_value": 22.821042920953488,
+          "accuracy_points": 7,
+          "rmse_points": 5,
+          "total_points": 12
+        },
+        {
+          "nominal_pf": 20,
+          "readings_pf": [
+            19.84,
+            19.88,
+            20.04,
+            19.82,
+            20.02
+          ],
+          "valid": true,
+          "mean_pf": 19.919999999999998,
+          "accuracy_formula_value": 8.000000000000185,
+          "rmse_pf": 0.12198360545581534,
+          "rmse_formula_value": 12.198360545581535,
+          "accuracy_points": 10,
+          "rmse_points": 7,
+          "total_points": 17
+        }
+      ]
+    }
+  },
+  "leave_capacitor_out_training": {
+    "polynomial_1": {
+      "rmse_pf": 0.4231500954500844,
+      "folds": [
+        {
+          "excluded_nominal_pf": 5.0,
+          "rmse_pf": 0.17129849768244046,
+          "extrapolation": true
+        },
+        {
+          "excluded_nominal_pf": 10.0,
+          "rmse_pf": 0.12782679342921563,
+          "extrapolation": false
+        },
+        {
+          "excluded_nominal_pf": 15.0,
+          "rmse_pf": 0.4969748813250966,
+          "extrapolation": false
+        },
+        {
+          "excluded_nominal_pf": 20.0,
+          "rmse_pf": 0.6508126581612499,
+          "extrapolation": true
+        }
+      ]
+    },
+    "polynomial_2": {
+      "rmse_pf": 1.0222409112187265,
+      "folds": [
+        {
+          "excluded_nominal_pf": 5.0,
+          "rmse_pf": 1.4595679746795425,
+          "extrapolation": true
+        },
+        {
+          "excluded_nominal_pf": 10.0,
+          "rmse_pf": 0.508306652500356,
+          "extrapolation": false
+        },
+        {
+          "excluded_nominal_pf": 15.0,
+          "rmse_pf": 0.4824709943864716,
+          "extrapolation": false
+        },
+        {
+          "excluded_nominal_pf": 20.0,
+          "rmse_pf": 1.2483642642140318,
+          "extrapolation": true
+        }
+      ]
+    },
+    "piecewise_linear": {
+      "rmse_pf": 0.562817256466584,
+      "folds": [
+        {
+          "excluded_nominal_pf": 5.0,
+          "rmse_pf": 0.41961706209840044,
+          "extrapolation": true
+        },
+        {
+          "excluded_nominal_pf": 10.0,
+          "rmse_pf": 0.22353074377197982,
+          "extrapolation": false
+        },
+        {
+          "excluded_nominal_pf": 15.0,
+          "rmse_pf": 0.49366638611201796,
+          "extrapolation": false
+        },
+        {
+          "excluded_nominal_pf": 20.0,
+          "rmse_pf": 0.892917736252362,
+          "extrapolation": true
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Validation is later batches in the same session, not a fresh session or unknown capacitor.",
+    "Validation data was examined in earlier analysis; this is exploratory, not a blind final test.",
+    "Only four nominal references, each +/-5%; absolute accuracy is not established.",
+    "No final refit on validation batches; firmware exports only batches 1-10 calibration.",
+    "Outside 5-20 pF is linear extrapolation; not validated.",
+    "Input came from bench firmware; competition firmware requires board verification.",
+    "Scoring uses pF errors times 100 without normalization; exact rubric gaps return null."
+  ]
+}
