@@ -1,0 +1,7 @@
+# Raspberry Pi runtime. No PyTorch, ultralytics, or scikit-learn.
+numpy==2.5.4
+opencv-python-headless==5.0.0.93
+ncnn==1.0.20261020
+pyyaml==6.0.3
+paho-mqtt==2.1.0
+requests==2.32.5

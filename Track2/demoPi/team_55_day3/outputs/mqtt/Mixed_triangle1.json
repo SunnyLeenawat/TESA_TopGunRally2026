@@ -1,0 +1,14 @@
+{
+  "image": "Mixed_triangle1.jpg",
+  "latency_ms": 856,
+  "counts": {
+    "good": 1,
+    "shell": 1,
+    "black": 1,
+    "husk": 1,
+    "broken": 1,
+    "parchment": 1,
+    "immature": 0
+  },
+  "defect_ratio": 0.8333333333333334
+}

@@ -1,0 +1,32 @@
+{
+  "end2end": false,
+  "input": "in0",
+  "outputs": [
+    "out0",
+    "out1"
+  ],
+  "shapes": {
+    "out0": [
+      43,
+      8400
+    ],
+    "out1": [
+      32,
+      160,
+      160
+    ]
+  },
+  "names": [
+    "husk",
+    "parchment",
+    "immature",
+    "good",
+    "shell",
+    "black",
+    "broken"
+  ],
+  "imgsz": [
+    640,
+    640
+  ]
+}

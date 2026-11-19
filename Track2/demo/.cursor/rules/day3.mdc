@@ -1,0 +1,25 @@
+---
+description: Day 3 class registry and output contract
+alwaysApply: true
+---
+
+# Day 3 contract
+
+Class ids and submission names come from `config/classes.yaml`. Do not hard-code either list.
+
+Train ids: 0 husk, 1 parchment, 2 immature, 3 good, 4 shell, 5 black, 6 broken.
+Submission names, and the seven `counts` keys, in this order: good, shell, black, husk, broken, parchment, immature.
+Aliases: `full_black` -> `black`, `hull_husk` -> `husk`. Defect is every class except `good`.
+
+`labels.json` stores string class names and full-image polygons. It does not store integer ids.
+
+`python infer.py --input <folder> --weights <folder> --out <folder>` writes, under `--out`:
+
+- `seg_mask/<stem>.png`: 0 is background, 1..N are bean ids, same HxW as the input. uint8 when N <= 255, otherwise uint16.
+- `predictions.json`: a list of `{"image_name", "objects": [{"id", "class", "polygon"}]}`. No confidence. One object per bean. Polygon points are full-image pixels from `cv2.findContours` on that bean's mask.
+- `mqtt/<stem>.json`: `{"image", "latency_ms", "counts", "defect_ratio"}`. `counts` has all 7 keys. `defect_ratio` is `(total - good) / total`, or `0.0` when total is 0.
+- `vis/<stem>.png`: overlay.
+
+One instance list, after overlap resolution, is the only source of truth. If resolution empties an instance, drop it from the mask, the JSON, and the counts. Run `validate_outputs` at the end of every infer run.
+
+Pi inference uses no PyTorch and no ultralytics. NCNN blob names come from a real export. `hsv_h` stays 0. No camera. One failed image logs, writes an empty valid result, and the batch continues.

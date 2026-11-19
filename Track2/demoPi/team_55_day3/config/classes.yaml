@@ -1,0 +1,27 @@
+# Single class registry. Train ids are the list index of train_order.
+# Submission strings are the predictions.json class values and the counts keys.
+# labels.json on disk stores these submission strings, not the integer ids.
+
+train_order:
+  - husk
+  - parchment
+  - immature
+  - good
+  - shell
+  - black
+  - broken
+
+submission_order:
+  - good
+  - shell
+  - black
+  - husk
+  - broken
+  - parchment
+  - immature
+
+good_name: good
+
+aliases:
+  full_black: black
+  hull_husk: husk

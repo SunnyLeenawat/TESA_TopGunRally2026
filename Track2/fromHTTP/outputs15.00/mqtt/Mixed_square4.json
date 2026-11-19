@@ -1,0 +1,14 @@
+{
+  "image": "Mixed_square4.jpg",
+  "latency_ms": 1244,
+  "counts": {
+    "good": 0,
+    "shell": 2,
+    "black": 2,
+    "husk": 2,
+    "broken": 1,
+    "parchment": 1,
+    "immature": 0
+  },
+  "defect_ratio": 1.0
+}

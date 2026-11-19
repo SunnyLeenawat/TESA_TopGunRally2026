@@ -1,0 +1,14 @@
+{
+  "image": "Mixed_grid5.jpg",
+  "latency_ms": 1473,
+  "counts": {
+    "good": 2,
+    "shell": 1,
+    "black": 2,
+    "husk": 0,
+    "broken": 3,
+    "parchment": 1,
+    "immature": 0
+  },
+  "defect_ratio": 0.7777777777777778
+}

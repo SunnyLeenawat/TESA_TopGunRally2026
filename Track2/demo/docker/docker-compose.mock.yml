@@ -1,0 +1,58 @@
+# Offline rehearsal. Mosquitto is anonymous on 1883.
+# Profile s4 starts the HTTP checker and the client. The client image is the train image.
+
+name: coffee-edge-mock
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2.0.22
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto.mock.conf:/mosquitto/config/mosquitto.conf:ro
+    healthcheck:
+      test: ["CMD", "mosquitto_pub", "-h", "localhost", "-t", "health", "-m", "ok"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+  mock-http:
+    profiles: ["s4"]
+    image: coffee-edge-train:phase0
+    working_dir: /app
+    environment:
+      MOCK_IMAGE_DIR: /data/mix
+      MOCK_PORT: "8080"
+      MOCK_REPORT: /data/outputs/mock_submit/report.json
+    volumes:
+      - ${HOST_DATA_DIR:?Set HOST_DATA_DIR in .env}:/data
+    command: ["python", "-m", "coffee.mock.server"]
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')"]
+      interval: 2s
+      timeout: 5s
+      retries: 20
+
+  client:
+    profiles: ["s4"]
+    image: coffee-edge-train:phase0
+    working_dir: /app
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+      mock-http:
+        condition: service_healthy
+    environment:
+      COFFEE_HTTP_BASE: http://mock-http:8080
+      COFFEE_MQTT_HOST: mosquitto
+      COFFEE_MQTT_PORT: "1883"
+      COFFEE_MQTT_TOPIC: coffee/team_55
+      COFFEE_TEAM: team_55
+      COFFEE_DATA_DIR: /data
+      COFFEE_MODEL_DIR: /data/models
+      COFFEE_OUTPUT_DIR: /data/outputs
+    volumes:
+      - ${HOST_DATA_DIR:?Set HOST_DATA_DIR in .env}:/data
+    command: ["python", "client.py", "--weights", "/data/models/yolo26n-seg_ncnn", "--out", "/data/outputs/day3_client"]

@@ -1,0 +1,25 @@
+description: Ultralytics YOLO26n-seg model trained on /data/outputs/day3/yolo_s5/data.yaml
+author: Ultralytics
+date: "2026-11-19T06:52:17.981748+00:00"
+version: "8.4.212"
+license: AGPL-3.0 License (https://ultralytics.com/license)
+docs: https://docs.ultralytics.com
+stride: 32
+task: segment
+head: Segment26
+batch: 1
+imgsz:
+- 640
+- 640
+names:
+  0: husk
+  1: parchment
+  2: immature
+  3: good
+  4: shell
+  5: black
+  6: broken
+args:
+  quantize: null
+channels: 3
+end2end: false

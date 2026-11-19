@@ -1,0 +1,17 @@
+---
+description: Coffee-edge Track 2 constraints for paths, runtime, and labels
+alwaysApply: true
+---
+
+# Coffee-edge
+
+- Project root is this Track 2 folder. Dataset samples live in `data/_sample/`.
+- Paths come from `config/config.yaml`, `COFFEE_*` env vars, or CLI flags. Do not hard-code data, model, or output paths.
+- Docker bind mount is only `${HOST_DATA_DIR}` -> `/data`. Switching dataset means editing `.env`.
+- Class ids and names are read from `config/classes.yaml`. Do not hard-code the list.
+- The only label format is YOLO segmentation polygon text (`labels.format: yolo_seg_txt`).
+- Pi runtime image: Python, numpy, opencv-python-headless, ncnn, pyyaml. No PyTorch, ultralytics, or scikit-learn.
+- No camera input. Sources are an image file or a folder.
+- `day` is 1, 2, or 3. Do not hard-code class counts, image names, or folder populations.
+- YOLO26 NCNN output names and shapes are written only after a real export is inspected.
+- Use logging. Do not swallow exceptions.
